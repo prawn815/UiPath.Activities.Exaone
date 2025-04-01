@@ -1,0 +1,32 @@
+{
+  "resourceManagerName": "UiPath.Activities.Exaone.Resources.Resources",
+    "activities": [
+        {
+            "fullName": "UiPath.Activities.Exaone.ContentGeneration",
+            "shortName": "ContentGeneration",
+            "displayNameKey": "ContentGeneration_DisplayName",
+            "descriptionKey": "ContentGeneration_Description",
+            "categoryKey": "Exaone",
+            "iconKey": "ContentGeneration.svg",
+            "viewModelType": "UiPath.Activities.Exaone.ViewModels.ContentGenerationViewModel"
+        },
+        {
+            "fullName": "UiPath.Activities.Exaone.GetFullDatabase",
+            "shortName": "GetFullDatabase",
+            "displayNameKey": "GetFullDatabase_DisplayName",
+            "descriptionKey": "GetFullDatabase_Description",
+            "categoryKey": "Exaone",
+            "iconKey": "GetFullDatabase.svg",
+            "viewModelType": "UiPath.Activities.Exaone.ViewModels.GetFullDatabaseViewModel"
+        },
+        {
+            "fullName": "UiPath.Activities.Exaone.ClearDatabase",
+            "shortName": "ClearDatabase",
+            "displayNameKey": "ClearDatabase_DisplayName",
+            "descriptionKey": "ClearDatabase_Description",
+            "categoryKey": "Exaone",
+            "iconKey": "ClearDatabase.svg",
+            "viewModelType": "UiPath.Activities.Exaone.ViewModels.ClearDatabaseViewModel"
+        }
+    ]
+}

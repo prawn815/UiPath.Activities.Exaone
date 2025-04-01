@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ContentGeneration_Description" xml:space="preserve">
+    <value>채팅 자동 완성 모델을 사용하여 제공된 요청에 대한 채팅 응답 생성</value>
+    <comment>activity description</comment>
+  </data>
+  <data name="ContentGeneration_DisplayName" xml:space="preserve">
+    <value>Content Generation</value>
+    <comment>activity name</comment>
+  </data>
+  <data name="Result_DisplayName" xml:space="preserve">
+    <value>전체 결과</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Result_Tooltip" xml:space="preserve">
+    <value>Exaone API가 생성한 응답 전체 결과입니다. (json 문자열)</value>
+    <comment>property</comment>
+  </data>
+  <data name="SystemPrompt_DisplayName" xml:space="preserve">
+    <value>시스템 프롬프트</value>
+    <comment>property name</comment>
+  </data>
+  <data name="SystemPrompt_Tooltip" xml:space="preserve">
+    <value>시스템이 제공하는 기본 프롬프트 (선택 사항)</value>
+    <comment>property</comment>
+  </data>
+  <data name="Temperature_DisplayName" xml:space="preserve">
+    <value>온도</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Temperature_Tooltip" xml:space="preserve">
+    <value>텍스트 생성의 창의성 요소 조정 (0~1 사이)</value>
+    <comment>property</comment>
+  </data>
+  <data name="UserPrompt_DisplayName" xml:space="preserve">
+    <value>유저 프롬프트</value>
+    <comment>property name</comment>
+  </data>
+  <data name="UserPrompt_Tooltip" xml:space="preserve">
+    <value>사용자 질문 또는 요청 텍스트를 입력합니다.</value>
+    <comment>property</comment>
+  </data>
+  <data name="Model_DisplayName" xml:space="preserve">
+    <value>모델 이름</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Model_Tooltip" xml:space="preserve">
+    <value>채팅 자동 완성에 사용할 모델 이름</value>
+    <comment>property</comment>
+  </data>
+  <data name="ContextGrounding_DisplayName" xml:space="preserve">
+    <value>컨텍스트 그라운딩</value>
+    <comment>property name</comment>
+  </data>
+  <data name="ContextGrounding_Tooltip" xml:space="preserve">
+    <value>컨텍스트에 따라 프롬프트의 기준을 정하여 출력의 품질과 정확도를 높입니다. 이 기능을 사용하면 사용자가 독점 비즈니스 논리 및 지식을 프롬프트에 삽입할 수 있습니다.</value>
+    <comment>property</comment>
+  </data>
+  <data name="Top_K_DisplayName" xml:space="preserve">
+    <value>결과 개수</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Top_K_Tooltip" xml:space="preserve">
+    <value>검색 시 반환할 최대 결과 수를 설정합니다.</value>
+    <comment>property</comment>
+  </data>
+  <data name="FilePath_DisplayName" xml:space="preserve">
+    <value>텍스트 파일 경로</value>
+    <comment>property name</comment>
+  </data>
+  <data name="FilePath_Tooltip" xml:space="preserve">
+    <value>입력에 사용할 로컬 텍스트 파일의 경로를 입력하세요.</value>
+    <comment>property</comment>
+  </data>
+  <data name="RawTextInput_DisplayName" xml:space="preserve">
+    <value>Text</value>
+    <comment>property name</comment>
+  </data>
+  <data name="RawTextInput_Tooltip" xml:space="preserve">
+    <value>텍스트 입력</value>
+    <comment>property</comment>
+  </data>
+  <data name="Url_DisplayName" xml:space="preserve">
+    <value>URL</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Url_Tooltip" xml:space="preserve">
+    <value>컨텍스트로 사용할 웹페이지의 주소(URL)를 입력합니다.</value>
+    <comment>property</comment>
+  </data>
+  <data name="FailOnGroundingError_DisplayName" xml:space="preserve">
+    <value>ContinueOnGroundingError</value>
+    <comment>property name</comment>
+  </data>
+  <data name="FailOnGroundingError_Tooltip" xml:space="preserve">
+    <value>컨텍스트 데이터 로딩에 실패해도 작업을 계속 진행합니다. 체크를 해제하면 실패 시 오류로 중단됩니다.
+(기본값: 체크됨)</value>
+    <comment>property</comment>
+  </data>
+  <data name="SearchQuery_DisplayName" xml:space="preserve">
+    <value>검색 쿼리</value>
+    <comment>property name</comment>
+  </data>
+  <data name="SearchQuery_Tooltip" xml:space="preserve">
+    <value>검색하고 싶은 텍스트를 입력하세요. (예: 키워드, 문장 등)</value>
+    <comment>property</comment>
+  </data>
+  <data name="Score_DisplayName" xml:space="preserve">
+    <value>유사도 점수 포함</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Score_Tooltip" xml:space="preserve">
+    <value>결과에 유사도 점수를 포함시킬지 여부를 결정합니다. (기본값: 체크됨)</value>
+    <comment>property</comment>
+  </data>
+  <data name="MainText_DisplayName" xml:space="preserve">
+    <value>가장 많이 생성된 텍스트</value>
+    <comment>property name</comment>
+  </data>
+  <data name="MainText_Tooltip" xml:space="preserve">
+    <value>Exaone API가 생성한 응답 중 가장 많이 생성된 텍스트입니다.</value>
+    <comment>property</comment>
+  </data>
+  <data name="GetFullDatabase_DisplayName" xml:space="preserve">
+    <value>전체 데이터베이스 가져오기</value>
+    <comment>activity name</comment>
+  </data>
+  <data name="GetFullDatabase_Description" xml:space="preserve">
+    <value>DB 내 모든 데이터를 가져옵니다.</value>
+    <comment>activity description</comment>
+  </data>
+  <data name="StatusCode_DisplayName" xml:space="preserve">
+    <value>응답 상태</value>
+    <comment>property name</comment>
+  </data>
+  <data name="StatusCode_Tooltip" xml:space="preserve">
+    <value>API 응답 상태 코드</value>
+    <comment>property</comment>
+  </data>
+  <data name="Message_DisplayName" xml:space="preserve">
+    <value>응답 메시지</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Message_Tooltip" xml:space="preserve">
+    <value>API 응답 메시지</value>
+    <comment>property</comment>
+  </data>
+  <data name="GetDBResult_DisplayName" xml:space="preserve">
+    <value>결과 (JSON_string)</value>
+    <comment>property name</comment>
+  </data>
+  <data name="GetDBResult_Tooltip" xml:space="preserve">
+    <value>가져온 전체 데이터베이스 결과 (JSON 문자열)</value>
+    <comment>property</comment>
+  </data>
+  <data name="ClearDatabase_DisplayName" xml:space="preserve">
+    <value>데이터베이스 초기화</value>
+    <comment>activity name</comment>
+  </data>
+  <data name="ClearDatabase_Description" xml:space="preserve">
+    <value>데이터베이스의 모든 내용을 삭제하여 초기화합니다.</value>
+    <comment>activity description</comment>
+  </data>
+  <data name="Endpoint_DisplayName" xml:space="preserve">
+    <value>엔드포인트</value>
+    <comment>property name</comment>
+  </data>
+  <data name="Endpoint_Tooltip" xml:space="preserve">
+    <value>Exaon 엔드포인트</value>
+    <comment>property</comment>
+  </data>
+  <data name="ApiKey_DisplayName" xml:space="preserve">
+    <value>API키</value>
+    <comment>property name</comment>
+  </data>
+  <data name="ApiKey_Tooltip" xml:space="preserve">
+    <value>Exaon API키</value>
+    <comment>property</comment>
+  </data>
+</root>
