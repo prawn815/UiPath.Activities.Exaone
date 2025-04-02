@@ -27,7 +27,7 @@ namespace UiPath.Activities.Exaone
         public InArgument<string> SystemPrompt { get; set; } = new InArgument<string>("");
 
         // 🔹 모델을 직접 입력
-        public InArgument<string> Model { get; set; } //LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct
+        public InArgument<string> Model { get; set; } = "LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct";
 
         // 🔹 계수값
         public InArgument<double> Temperature { get; set; } = 0.7;
@@ -166,6 +166,16 @@ namespace UiPath.Activities.Exaone
             using (HttpClient client = new HttpClient())
             {
                 // 🔹 Authorization 헤더 설정
+                if (!string.IsNullOrWhiteSpace(apiKey))
+                {
+                    // ApiKey가 있으면 Bearer 토큰 형식으로 Authorization 헤더 추가
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+                }
+                // ApiKey가 없으면 Authorization 헤더를 생략 (추가하지 않음)
+
+
+                /*  API 키 최종 확인 후 제거
+                // 🔹 Authorization 헤더 설정
                 if (string.IsNullOrWhiteSpace(apiKey))
                 {
                     // ApiKey가 없으면 기본 Bearer 키 사용
@@ -176,6 +186,8 @@ namespace UiPath.Activities.Exaone
                     // ApiKey가 있으면 그대로 추가 (Bearer 없이)
                     client.DefaultRequestHeaders.Add("Authorization", apiKey);
                 }
+                */
+
 
                 // 요청 데이터 구성
                 var requestData = new
@@ -205,7 +217,7 @@ namespace UiPath.Activities.Exaone
             }
         }
 
-        // 🔹 ChromaDB에서 인덱스 기반 컨텍스트 검색
+        // 🔹 ChromaDB에서 검색 쿼리 기반 컨텍스트 검색
         private async Task<string> QueryChromaDB(string searchquery, int top_k, bool score)
         {
             using (HttpClient client = new HttpClient())

@@ -151,7 +151,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   ContinueOnGroundingError과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   컨텍스트 그라운딩 오류 시 계속 진행과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string FailOnGroundingError_DisplayName {
             get {
@@ -206,7 +206,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   DB 내 모든 데이터를 가져옵니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   데이터베이스 내 모든 데이터를 가져옵니다.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string GetFullDatabase_Description {
             get {
@@ -278,7 +278,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Text과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   텍스트과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string RawTextInput_DisplayName {
             get {
@@ -305,7 +305,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Exaone API가 생성한 응답 전체 결과입니다. (json 문자열)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Exaone API가 생성한 응답 전체 결과입니다. (JSON 문자열)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Result_Tooltip {
             get {

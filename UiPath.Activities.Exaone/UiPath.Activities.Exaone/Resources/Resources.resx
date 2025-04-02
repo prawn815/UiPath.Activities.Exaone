@@ -130,7 +130,7 @@
     <comment>property name</comment>
   </data>
   <data name="Result_Tooltip" xml:space="preserve">
-    <value>Exaone API가 생성한 응답 전체 결과입니다. (json 문자열)</value>
+    <value>Exaone API가 생성한 응답 전체 결과입니다. (JSON 문자열)</value>
     <comment>property</comment>
   </data>
   <data name="SystemPrompt_DisplayName" xml:space="preserve">
@@ -190,7 +190,7 @@
     <comment>property</comment>
   </data>
   <data name="RawTextInput_DisplayName" xml:space="preserve">
-    <value>Text</value>
+    <value>텍스트</value>
     <comment>property name</comment>
   </data>
   <data name="RawTextInput_Tooltip" xml:space="preserve">
@@ -206,7 +206,7 @@
     <comment>property</comment>
   </data>
   <data name="FailOnGroundingError_DisplayName" xml:space="preserve">
-    <value>ContinueOnGroundingError</value>
+    <value>컨텍스트 그라운딩 오류 시 계속 진행</value>
     <comment>property name</comment>
   </data>
   <data name="FailOnGroundingError_Tooltip" xml:space="preserve">
@@ -243,7 +243,7 @@
     <comment>activity name</comment>
   </data>
   <data name="GetFullDatabase_Description" xml:space="preserve">
-    <value>DB 내 모든 데이터를 가져옵니다.</value>
+    <value>데이터베이스 내 모든 데이터를 가져옵니다.</value>
     <comment>activity description</comment>
   </data>
   <data name="StatusCode_DisplayName" xml:space="preserve">
