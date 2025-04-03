@@ -227,7 +227,7 @@
     <comment>property name</comment>
   </data>
   <data name="Score_Tooltip" xml:space="preserve">
-    <value>결과에 유사도 점수를 포함시킬지 여부를 결정합니다. (기본값: 체크됨)</value>
+    <value>검색된 컨텍스트에 유사도 점수를 포함할지 여부를 결정합니다. (기본값: 체크됨)</value>
     <comment>property</comment>
   </data>
   <data name="MainText_DisplayName" xml:space="preserve">
@@ -292,6 +292,23 @@
   </data>
   <data name="ApiKey_Tooltip" xml:space="preserve">
     <value>Exaon API키</value>
+    <comment>property</comment>
+  </data>
+  <data name="MinimumScore_DisplayName" xml:space="preserve">
+    <value>최소 유사도 점수</value>
+    <comment>property name</comment>
+  </data>
+  <data name="MinimumScore_Tooltip" xml:space="preserve">
+    <value>컨텍스트에 포함될 최소 유사도 점수를 지정합니다.
+지정된 값보다 낮은 결과는 제외됩니다. (0~1 사이)</value>
+    <comment>property</comment>
+  </data>
+  <data name="CitationText_DisplayName" xml:space="preserve">
+    <value>인용 문자열</value>
+    <comment>property name</comment>
+  </data>
+  <data name="CitationText_Tooltip" xml:space="preserve">
+    <value>벡터 검색을 통해 참고된 컨텍스트 정보입니다. AI 응답의 기반이 된 인용 정보가 포함됩니다.</value>
     <comment>property</comment>
   </data>
 </root>

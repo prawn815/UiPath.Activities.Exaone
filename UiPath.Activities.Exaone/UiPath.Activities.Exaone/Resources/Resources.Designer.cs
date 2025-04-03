@@ -79,6 +79,24 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   인용 문자열과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string CitationText_DisplayName {
+            get {
+                return ResourceManager.GetString("CitationText_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   벡터 검색을 통해 참고된 컨텍스트 정보입니다. AI 응답의 기반이 된 인용 정보가 포함됩니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string CitationText_Tooltip {
+            get {
+                return ResourceManager.GetString("CitationText_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   데이터베이스의 모든 내용을 삭제하여 초기화합니다.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string ClearDatabase_Description {
@@ -260,6 +278,25 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   최소 유사도 점수과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string MinimumScore_DisplayName {
+            get {
+                return ResourceManager.GetString("MinimumScore_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   컨텍스트에 포함될 최소 유사도 점수를 지정합니다.
+        ///지정된 값보다 낮은 결과는 제외됩니다. (0~1 사이)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string MinimumScore_Tooltip {
+            get {
+                return ResourceManager.GetString("MinimumScore_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   모델 이름과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Model_DisplayName {
@@ -323,7 +360,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   결과에 유사도 점수를 포함시킬지 여부를 결정합니다. (기본값: 체크됨)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   검색된 컨텍스트에 유사도 점수를 포함할지 여부를 결정합니다. (기본값: 체크됨)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Score_Tooltip {
             get {

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UiPath.Activities.Exaone.Helpers;
 using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
 
@@ -29,7 +30,7 @@ namespace UiPath.Activities.Exaone
         // 🔹 모델을 직접 입력
         public InArgument<string> Model { get; set; } = "LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct";
 
-        // 🔹 계수값
+        // 🔹 온도
         public InArgument<double> Temperature { get; set; } = 0.7;
 
         // 🔹 컨텍스트 그라운딩 방식 선택
@@ -39,10 +40,13 @@ namespace UiPath.Activities.Exaone
         public InArgument<string> SearchQuery { get; set; } = "";
 
         // 🔹 Query 기반 조회를 위한 속성 : 개수
-        public InArgument<int> Top_K { get; set; } = 0;
+        public InArgument<int> Top_K { get; set; } = 1;
 
         // 🔹 Query 기반 조회를 위한 속성 : 스코어
         public bool Score { get; set; } = true;
+
+        // 🔹 컨텍스트 그라운딩 자료 인용 시 최소 스코어
+        public InArgument<double> MinimumScore { get; set; } = 0.0;
 
         // 🔹 파일 기반 조회를 위한 속성
         public InArgument<string> FilePath { get; set; } = "";
@@ -59,6 +63,9 @@ namespace UiPath.Activities.Exaone
         // 🔹 Out : 가장 많이 생성된 텍스트
         public OutArgument<string> MainText { get; set; }
 
+        // 🔹 Out : 인용문자열 (컨텍스트 그라운딩 인용에 사용된 문구)
+        public OutArgument<string> CitationText {  get; set; }
+
 
         protected override string Execute(CodeActivityContext context)
         {
@@ -70,17 +77,37 @@ namespace UiPath.Activities.Exaone
             double temperature = Temperature.Get(context);
             ContextGroundingType groundingType = ContextGrounding;
             string searchQuery = SearchQuery.Get(context);
-            int top_k = Top_K.Get(context);
+            int top_k = Math.Max(1, Top_K.Get(context));    // 최소 1 , 1개의 결과 이상을 표출하게 제한
             bool score = Score;
+            double minimumScore = Math.Clamp(MinimumScore.Get(context), 0.0, 1.0);  // 최소 유사도 점수 0 ~ 1 제한
             string filePath = FilePath.Get(context);
             string rawTextInput = RawTextInput.Get(context) ?? "";
-            string url = Url.Get(context) ?? "";
+            string url = Url.Get(context)?.Trim() ?? "";
             bool failOnGroundingError = FailOnGroundingError;
+            string citationJson = "";
 
-            ExaoneResponse response = GenerateResponse(endpoint, apiKey, userPrompt, systemPrompt, model, temperature, groundingType, searchQuery, top_k, score, filePath, rawTextInput, url, failOnGroundingError);
+            ExaoneResponse response = GenerateResponse(
+                endpoint, 
+                apiKey, 
+                userPrompt, 
+                systemPrompt, 
+                model, 
+                temperature, 
+                groundingType, 
+                searchQuery, 
+                top_k, 
+                score,
+                minimumScore,
+                filePath, 
+                rawTextInput, 
+                url, 
+                failOnGroundingError,
+                out citationJson
+                );
 
             // 결과값 설정
             MainText.Set(context, response?.Choices?[0]?.Message?.Content ?? "");
+            CitationText.Set(context, citationJson);
 
             // 전체 응답 json 문자열 반환
             return JsonConvert.SerializeObject(response);
@@ -97,13 +124,17 @@ namespace UiPath.Activities.Exaone
             string searchQuery,
             int top_k,
             bool score,
+            double minimumScore,
             string filePath,
             string rawTextInput,
             string url,
-            bool failOnGroundingError)
+            bool failOnGroundingError,
+            out string citationText
+            )
         {
 
             string vectorData = "";
+            citationText = "";
 
             // 🔹 컨텍스트 그라운딩 수행
 
@@ -112,20 +143,43 @@ namespace UiPath.Activities.Exaone
                 switch (groundingType)
                 {
                     case ContextGroundingType.SearchQuery:
-                        vectorData = Task.Run(() => QueryChromaDB(searchQuery, top_k, score)).Result;
+                        vectorData = Task.Run(() => QueryChromaDB(searchQuery, top_k, score, minimumScore)).Result;
+                        citationText = vectorData;
                         break;
 
                     case ContextGroundingType.FileResource:
-                        vectorData = Task.Run(() => UploadFileToChromaDB(filePath)).Result; // 파일 업로드
-                        break;
+                        {
+                            // 파일 업로드
+                            string uploadResult = Task.Run(() => UploadFileToChromaDB(filePath)).Result;
+
+                            // 파일명 기반 쿼리 수행
+                            string fileName = Path.GetFileName(filePath);   // 정확성을 위해 확장자 포함
+                            vectorData = Task.Run(() => QueryChromaDB(fileName, top_k, score, minimumScore)).Result;
+                            citationText = vectorData;
+                            break;
+                        }
 
                     case ContextGroundingType.RawText:
-                        vectorData = Task.Run(() => UploadRawTextToChromaDB(rawTextInput)).Result;
-                        break;
+                        {
+                            string rawText = rawTextInput;
+                            string uploadResult = Task.Run(() => UploadRawTextToChromaDB(rawText)).Result;
+
+                            // 입력 텍스트 앞부분으로 쿼리 수행 (텍스트 100자로 절삭)
+                            string queryPreview = rawText.Length > 100 ? rawText.Substring(0, 100) : rawText;
+                            vectorData = Task.Run(() => QueryChromaDB(queryPreview, top_k, score, minimumScore)).Result;
+                            citationText = vectorData;
+                            break;
+                        }
 
                     case ContextGroundingType.WebPage:
-                        vectorData = Task.Run(() => LoadWebPage(url)).Result;
-                        break;
+                        {
+                            string uploadResult = Task.Run(() => LoadWebPage(url)).Result;
+
+                            // 🔹 전체 URL로 검색 수행 (정확 매칭을 위해)
+                            vectorData = Task.Run(() => QueryChromaDB(url, top_k, score, minimumScore)).Result;
+                            citationText = vectorData;
+                            break;
+                        }
 
                     case ContextGroundingType.None:
                     default:
@@ -138,6 +192,7 @@ namespace UiPath.Activities.Exaone
                 if (failOnGroundingError)
                 {
                     vectorData = $"** Context grounding failed: {ex.Message}";
+                    citationText = vectorData;
                 }
                 else
                 {
@@ -218,7 +273,7 @@ namespace UiPath.Activities.Exaone
         }
 
         // 🔹 ChromaDB에서 검색 쿼리 기반 컨텍스트 검색
-        private async Task<string> QueryChromaDB(string searchquery, int top_k, bool score)
+        private async Task<string> QueryChromaDB(string searchquery, int top_k, bool score, double minimumScore)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -231,6 +286,26 @@ namespace UiPath.Activities.Exaone
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception($"QueryChromaDB failed: {response.StatusCode} - {result}");
+
+                // 🔹 결과 파싱 후 필터링
+                // 🔹 점수 포함 옵션 & 최소 점수 조건이 있을 때만 필터링
+                if (score && minimumScore > 0)
+                {
+                    JObject responseObject = JObject.Parse(result);
+                    JArray contextArray = (JArray)responseObject["context"];
+
+                    contextArray = new JArray(
+                        contextArray
+                            .Where(item =>
+                                item["score"] != null &&
+                                double.TryParse(item["score"].ToString(), out double s) &&
+                                s >= minimumScore
+                            )
+                    );
+
+                    responseObject["context"] = contextArray;
+                    result = responseObject.ToString(Formatting.None);  // result 값 갱신
+                }
 
                 return result;
             }

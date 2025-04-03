@@ -21,7 +21,7 @@ namespace UiPath.Activities.Exaone.ViewModels
         // 🔹 시스템 프롬프트
         public DesignInArgument<string> SystemPrompt { get; set; }
 
-        // 🔹 계수값
+        // 🔹 온도
         public DesignInArgument<double> Temperature { get; set; }
 
         // 🔹 컨텍스트 그라운딩 방식 선택
@@ -35,6 +35,9 @@ namespace UiPath.Activities.Exaone.ViewModels
 
         // 🔹 Query 기반 조회를 위한 속성 : 스코어
         public DesignProperty<bool> Score { get; set; }
+
+        // 🔹 컨텍스트 그라운딩 자료 인용 시 최소 스코어
+        public DesignInArgument<double> MinimumScore {  get; set; }
 
         // 🔹 파일 기반 조회를 위한 속성
         public DesignInArgument<string> FilePath { get; set; }
@@ -52,6 +55,8 @@ namespace UiPath.Activities.Exaone.ViewModels
         public DesignOutArgument<string> MainText { get; set; }
         // 🔹 결과값 (ExaoneResponse 타입 전체 결과)
         public DesignOutArgument<string> Result { get; set; }
+        // 🔹 결과값 ( 컨텍스트 그라운딩 인용절 JSON 문자열)
+        public DesignOutArgument<string> CitationText { get; set; }
 
         public ContentGenerationViewModel(IDesignServices services) : base(services)
         {
@@ -114,6 +119,7 @@ namespace UiPath.Activities.Exaone.ViewModels
             SearchQuery.IsVisible = false;
             Top_K.IsVisible = false;
             Score.IsVisible = false;
+            MinimumScore.IsVisible = false;
             FilePath.IsVisible = false;
             RawTextInput.IsVisible = false;
             Url.IsVisible = false;
@@ -124,17 +130,23 @@ namespace UiPath.Activities.Exaone.ViewModels
             {
                 var selected = prop.Value;
 
+                // Top_K, Score는 SearchQuery, FileResource, RawText, WebPage 사용
+                bool showOptions = selected == ContextGroundingType.SearchQuery ||
+                                         selected == ContextGroundingType.FileResource ||
+                                         selected == ContextGroundingType.RawText ||
+                                         selected == ContextGroundingType.WebPage;
+
+                Top_K.IsVisible = showOptions;
+                Score.IsVisible = showOptions;
+
                 SearchQuery.IsVisible = selected == ContextGroundingType.SearchQuery;
-                Top_K.IsVisible = selected == ContextGroundingType.SearchQuery;
-                Score.IsVisible = selected == ContextGroundingType.SearchQuery;
                 FilePath.IsVisible = selected == ContextGroundingType.FileResource;
                 RawTextInput.IsVisible = selected == ContextGroundingType.RawText;
                 Url.IsVisible = selected == ContextGroundingType.WebPage;
 
+                // 드롭박스 변경 시 기존 입력 값 초기화
                 if (selected != ContextGroundingType.SearchQuery)
                     SearchQuery.Value = string.Empty;
-                    Top_K.Value = 0;
-                    Score.Value = true;
 
                 if (selected != ContextGroundingType.FileResource)
                     FilePath.Value = string.Empty;
@@ -144,6 +156,29 @@ namespace UiPath.Activities.Exaone.ViewModels
 
                 if (selected != ContextGroundingType.WebPage)
                     Url.Value = string.Empty;
+
+                if (!showOptions)
+                {
+                    Top_K.Value = 1;
+                    Score.Value = true;
+                    MinimumScore.Value = 0.0;
+                }
+
+                // Score 체크 여부에 따라 MinimumScore 표시 여부 갱신
+                Score.TrackValue(prop =>
+                {
+                    // context grounding이 4가지 중 하나일 때만 반응
+                    bool showMinimumScore = ContextGrounding.Value == ContextGroundingType.SearchQuery ||
+                                                ContextGrounding.Value == ContextGroundingType.FileResource ||
+                                                ContextGrounding.Value == ContextGroundingType.RawText ||
+                                                ContextGrounding.Value == ContextGroundingType.WebPage;
+
+                    MinimumScore.IsVisible = prop.Value && showMinimumScore;
+
+                    // 체크 해제되면 값 초기화
+                    if (!prop.Value)
+                        MinimumScore.Value = 0.0;
+                });
 
             });
 
@@ -164,6 +199,12 @@ namespace UiPath.Activities.Exaone.ViewModels
             Score.IsRequired = false;
             Score.IsPrincipal = true;   
             Score.OrderIndex = orderIndex++;
+
+            MinimumScore.DisplayName = Resources.MinimumScore_DisplayName;
+            MinimumScore.Tooltip = Resources.MinimumScore_Tooltip;
+            MinimumScore.IsRequired = false;
+            MinimumScore.IsPrincipal = true;
+            MinimumScore.OrderIndex = orderIndex++;
 
             FilePath.DisplayName = Resources.FilePath_DisplayName;
             FilePath.Tooltip = Resources.FilePath_Tooltip;
@@ -194,7 +235,11 @@ namespace UiPath.Activities.Exaone.ViewModels
 
             Result.DisplayName = Resources.Result_DisplayName;
             Result.Tooltip = Resources.Result_Tooltip;
-            Result.OrderIndex = orderIndex;
+            Result.OrderIndex = orderIndex++;
+
+            CitationText.DisplayName = Resources.CitationText_DisplayName;
+            CitationText.Tooltip = Resources.CitationText_Tooltip;
+            CitationText.OrderIndex = orderIndex;
 
         }
     }
