@@ -72,6 +72,15 @@ namespace UiPath.Activities.Exaone {
         /// <summary>
         ///   Exaon API키과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
+        public static string ApiKey_Placeholder {
+            get {
+                return ResourceManager.GetString("ApiKey_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Exaon API키과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
         public static string ApiKey_Tooltip {
             get {
                 return ResourceManager.GetString("ApiKey_Tooltip", resourceCulture);
@@ -162,6 +171,15 @@ namespace UiPath.Activities.Exaone {
         /// <summary>
         ///   Exaon 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
+        public static string Endpoint_Placeholder {
+            get {
+                return ResourceManager.GetString("Endpoint_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Exaon 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
         public static string Endpoint_Tooltip {
             get {
                 return ResourceManager.GetString("Endpoint_Tooltip", resourceCulture);
@@ -193,6 +211,15 @@ namespace UiPath.Activities.Exaone {
         public static string FilePath_DisplayName {
             get {
                 return ResourceManager.GetString("FilePath_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   텍스트 파일의 전체 경로과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string FilePath_Placeholder {
+            get {
+                return ResourceManager.GetString("FilePath_Placeholder", resourceCulture);
             }
         }
         
@@ -287,6 +314,15 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   0~1 사이 소수점 입력과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string MinimumScore_Placeholder {
+            get {
+                return ResourceManager.GetString("MinimumScore_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   컨텍스트에 포함될 최소 유사도 점수를 지정합니다.
         ///지정된 값보다 낮은 결과는 제외됩니다. (0~1 사이)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
@@ -302,6 +338,15 @@ namespace UiPath.Activities.Exaone {
         public static string Model_DisplayName {
             get {
                 return ResourceManager.GetString("Model_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   채팅 자동 완성에 사용할 모델 이름과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string Model_Placeholder {
+            get {
+                return ResourceManager.GetString("Model_Placeholder", resourceCulture);
             }
         }
         
@@ -325,6 +370,15 @@ namespace UiPath.Activities.Exaone {
         
         /// <summary>
         ///   텍스트 입력과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string RawTextInput_Placeholder {
+            get {
+                return ResourceManager.GetString("RawTextInput_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   컨텍스트로 활용할 텍스트를 입력하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string RawTextInput_Tooltip {
             get {
@@ -380,6 +434,15 @@ namespace UiPath.Activities.Exaone {
         /// <summary>
         ///   검색하고 싶은 텍스트를 입력하세요. (예: 키워드, 문장 등)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
+        public static string SearchQuery_Placeholder {
+            get {
+                return ResourceManager.GetString("SearchQuery_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   검색하고 싶은 텍스트를 입력하세요. (예: 키워드, 문장 등)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
         public static string SearchQuery_Tooltip {
             get {
                 return ResourceManager.GetString("SearchQuery_Tooltip", resourceCulture);
@@ -416,6 +479,15 @@ namespace UiPath.Activities.Exaone {
         /// <summary>
         ///   시스템이 제공하는 기본 프롬프트 (선택 사항)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
+        public static string SystemPrompt_Placeholder {
+            get {
+                return ResourceManager.GetString("SystemPrompt_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   시스템이 제공하는 기본 프롬프트 (선택 사항)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
         public static string SystemPrompt_Tooltip {
             get {
                 return ResourceManager.GetString("SystemPrompt_Tooltip", resourceCulture);
@@ -432,6 +504,15 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   0~1 사이 소수점 입력과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string Temperature_Placeholder {
+            get {
+                return ResourceManager.GetString("Temperature_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   텍스트 생성의 창의성 요소 조정 (0~1 사이)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Temperature_Tooltip {
@@ -441,7 +522,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   결과 개수과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   컨텍스트 검색 결과 개수과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Top_K_DisplayName {
             get {
@@ -450,7 +531,16 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   검색 시 반환할 최대 결과 수를 설정합니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   1~5 사이 인수 입력과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string Top_K_Placeholder {
+            get {
+                return ResourceManager.GetString("Top_K_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색된 결과 수입니다.)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Top_K_Tooltip {
             get {
@@ -464,6 +554,15 @@ namespace UiPath.Activities.Exaone {
         public static string Url_DisplayName {
             get {
                 return ResourceManager.GetString("Url_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URL 입력과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string Url_Placeholder {
+            get {
+                return ResourceManager.GetString("Url_Placeholder", resourceCulture);
             }
         }
         
@@ -482,6 +581,15 @@ namespace UiPath.Activities.Exaone {
         public static string UserPrompt_DisplayName {
             get {
                 return ResourceManager.GetString("UserPrompt_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   사용자 질문 또는 요청 텍스트를 입력합니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string UserPrompt_Placeholder {
+            get {
+                return ResourceManager.GetString("UserPrompt_Placeholder", resourceCulture);
             }
         }
         

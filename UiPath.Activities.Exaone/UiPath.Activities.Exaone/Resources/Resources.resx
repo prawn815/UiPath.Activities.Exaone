@@ -174,11 +174,11 @@
     <comment>property</comment>
   </data>
   <data name="Top_K_DisplayName" xml:space="preserve">
-    <value>결과 개수</value>
+    <value>컨텍스트 검색 결과 개수</value>
     <comment>property name</comment>
   </data>
   <data name="Top_K_Tooltip" xml:space="preserve">
-    <value>검색 시 반환할 최대 결과 수를 설정합니다.</value>
+    <value>응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색된 결과 수입니다.)</value>
     <comment>property</comment>
   </data>
   <data name="FilePath_DisplayName" xml:space="preserve">
@@ -194,7 +194,7 @@
     <comment>property name</comment>
   </data>
   <data name="RawTextInput_Tooltip" xml:space="preserve">
-    <value>텍스트 입력</value>
+    <value>컨텍스트로 활용할 텍스트를 입력하세요.</value>
     <comment>property</comment>
   </data>
   <data name="Url_DisplayName" xml:space="preserve">
@@ -310,5 +310,53 @@
   <data name="CitationText_Tooltip" xml:space="preserve">
     <value>벡터 검색을 통해 참고된 컨텍스트 정보입니다. AI 응답의 기반이 된 인용 정보가 포함됩니다.</value>
     <comment>property</comment>
+  </data>
+  <data name="Model_Placeholder" xml:space="preserve">
+    <value>채팅 자동 완성에 사용할 모델 이름</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="UserPrompt_Placeholder" xml:space="preserve">
+    <value>사용자 질문 또는 요청 텍스트를 입력합니다.</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="ApiKey_Placeholder" xml:space="preserve">
+    <value>Exaon API키</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="Endpoint_Placeholder" xml:space="preserve">
+    <value>Exaon 엔드포인트</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="SystemPrompt_Placeholder" xml:space="preserve">
+    <value>시스템이 제공하는 기본 프롬프트 (선택 사항)</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="Temperature_Placeholder" xml:space="preserve">
+    <value>0~1 사이 소수점 입력</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="MinimumScore_Placeholder" xml:space="preserve">
+    <value>0~1 사이 소수점 입력</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="RawTextInput_Placeholder" xml:space="preserve">
+    <value>텍스트 입력</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="Url_Placeholder" xml:space="preserve">
+    <value>URL 입력</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="Top_K_Placeholder" xml:space="preserve">
+    <value>1~5 사이 인수 입력</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="FilePath_Placeholder" xml:space="preserve">
+    <value>텍스트 파일의 전체 경로</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="SearchQuery_Placeholder" xml:space="preserve">
+    <value>검색하고 싶은 텍스트를 입력하세요. (예: 키워드, 문장 등)</value>
+    <comment>property placeholder</comment>
   </data>
 </root>

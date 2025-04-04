@@ -1,12 +1,7 @@
-﻿using System;
-using System.Activities;
-using System.Activities.DesignViewModels;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Activities;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UiPath.Activities.Exaone.Helpers;
 using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
 
 namespace UiPath.Activities.Exaone
@@ -25,10 +20,11 @@ namespace UiPath.Activities.Exaone
         public InArgument<string> UserPrompt { get; set; }
 
         // 🔹 시스템 프롬프트
-        public InArgument<string> SystemPrompt { get; set; } = new InArgument<string>("");
+        public InArgument<string> SystemPrompt { get; set; } = new InArgument<string>("You are a helpful assistant");
 
         // 🔹 모델을 직접 입력
-        public InArgument<string> Model { get; set; } = "LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct";
+        [RequiredArgument]
+        public InArgument<string> Model { get; set; }
 
         // 🔹 온도
         public InArgument<double> Temperature { get; set; } = 0.7;
@@ -64,7 +60,7 @@ namespace UiPath.Activities.Exaone
         public OutArgument<string> MainText { get; set; }
 
         // 🔹 Out : 인용문자열 (컨텍스트 그라운딩 인용에 사용된 문구)
-        public OutArgument<string> CitationText {  get; set; }
+        public OutArgument<string> CitationText { get; set; }
 
 
         protected override string Execute(CodeActivityContext context)
@@ -77,7 +73,7 @@ namespace UiPath.Activities.Exaone
             double temperature = Temperature.Get(context);
             ContextGroundingType groundingType = ContextGrounding;
             string searchQuery = SearchQuery.Get(context);
-            int top_k = Math.Max(1, Top_K.Get(context));    // 최소 1 , 1개의 결과 이상을 표출하게 제한
+            int top_k = Math.Min(5, Math.Max(1, Top_K.Get(context)));   // 최소 1 , 최대 5개까지만 제한
             bool score = Score;
             double minimumScore = Math.Clamp(MinimumScore.Get(context), 0.0, 1.0);  // 최소 유사도 점수 0 ~ 1 제한
             string filePath = FilePath.Get(context);
@@ -87,20 +83,20 @@ namespace UiPath.Activities.Exaone
             string citationJson = "";
 
             ExaoneResponse response = GenerateResponse(
-                endpoint, 
-                apiKey, 
-                userPrompt, 
-                systemPrompt, 
-                model, 
-                temperature, 
-                groundingType, 
-                searchQuery, 
-                top_k, 
+                endpoint,
+                apiKey,
+                userPrompt,
+                systemPrompt,
+                model,
+                temperature,
+                groundingType,
+                searchQuery,
+                top_k,
                 score,
                 minimumScore,
-                filePath, 
-                rawTextInput, 
-                url, 
+                filePath,
+                rawTextInput,
+                url,
                 failOnGroundingError,
                 out citationJson
                 );
@@ -245,14 +241,34 @@ namespace UiPath.Activities.Exaone
 
 
                 // 요청 데이터 구성
+                // 🔹 유저 프롬프트 + context 조합
+                string combinedPrompt;
+
+                if (!string.IsNullOrWhiteSpace(vectorData))
+                {
+                    combinedPrompt = $@"
+                    {userPrompt}
+
+
+                    위 질문에 대해 아래 CONTEXT를 참고해서 답변해줘. CONTEXT 외에 알 수 없는 내용은 모른다고 답변해줘.
+
+                    ## CONTEXT ##
+                    {vectorData}
+                    ";
+                }
+                else
+                {
+                    combinedPrompt = userPrompt;  // 컨텍스트가 없을 땐 프롬프트만 사용
+                }
+
                 var requestData = new
                 {
                     model = model,
                     messages = new[]
                     {
-                new { role = "system", content = systemPrompt },
-                new { role = "user", content = $"{vectorData}\n\n{userPrompt}" }
-            },
+                         new { role = "system", content = systemPrompt },  // 시스템 스타일
+                          new { role = "user", content = combinedPrompt }   // 유저 입력 + 컨텍스트
+                     },
                     temperature = temperature
                 };
 

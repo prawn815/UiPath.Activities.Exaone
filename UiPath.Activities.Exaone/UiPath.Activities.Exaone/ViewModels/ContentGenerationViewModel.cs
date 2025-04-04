@@ -75,36 +75,42 @@ namespace UiPath.Activities.Exaone.ViewModels
 
             Endpoint.DisplayName = Resources.Endpoint_DisplayName;
             Endpoint.Tooltip = Resources.Endpoint_Tooltip;
+            Endpoint.Placeholder = Resources.Endpoint_Placeholder;
             Endpoint.IsRequired = true;
             Endpoint.IsPrincipal = true;
             Endpoint.OrderIndex = orderIndex++;
 
             ApiKey.DisplayName = Resources.ApiKey_DisplayName;
             ApiKey.Tooltip = Resources.ApiKey_Tooltip;
+            ApiKey.Placeholder = Resources.ApiKey_Placeholder;
             ApiKey.IsRequired = false;
             ApiKey.IsPrincipal = true;
             ApiKey.OrderIndex = orderIndex++;
 
             Model.DisplayName = Resources.Model_DisplayName;
             Model.Tooltip = Resources.Model_Tooltip;
+            Model.Placeholder = Resources.Model_Placeholder;
             Model.IsRequired = true;
             Model.IsPrincipal = true;
             Model.OrderIndex = orderIndex++;
 
             UserPrompt.DisplayName = Resources.UserPrompt_DisplayName;
             UserPrompt.Tooltip = Resources.UserPrompt_Tooltip;
+            UserPrompt.Placeholder = Resources.UserPrompt_Placeholder;
             UserPrompt.IsRequired = true;
             UserPrompt.IsPrincipal = true;
             UserPrompt.OrderIndex = orderIndex++;
 
             SystemPrompt.DisplayName = Resources.SystemPrompt_DisplayName;
             SystemPrompt.Tooltip = Resources.SystemPrompt_Tooltip;
+            SystemPrompt.Placeholder = Resources.SystemPrompt_Placeholder;
             SystemPrompt.IsRequired = false;
             SystemPrompt.IsPrincipal = true;
             SystemPrompt.OrderIndex = orderIndex++;
 
             Temperature.DisplayName = Resources.Temperature_DisplayName;
             Temperature.Tooltip = Resources.Temperature_Tooltip;
+            Temperature.Placeholder = Resources.Temperature_Placeholder;
             Temperature.IsRequired = false;
             Temperature.IsPrincipal = true;
             Temperature.OrderIndex = orderIndex++;
@@ -184,12 +190,14 @@ namespace UiPath.Activities.Exaone.ViewModels
 
             SearchQuery.DisplayName = Resources.SearchQuery_DisplayName;
             SearchQuery.Tooltip = Resources.SearchQuery_Tooltip;
+            SearchQuery.Placeholder = Resources.SearchQuery_Placeholder;
             SearchQuery.IsRequired = false;
             SearchQuery.IsPrincipal = true;
             SearchQuery.OrderIndex = orderIndex++;
 
             Top_K.DisplayName = Resources.Top_K_DisplayName;
             Top_K.Tooltip = Resources.Top_K_Tooltip;
+            Top_K.Placeholder = Resources.Top_K_Placeholder;
             Top_K.IsRequired = false;
             Top_K.IsPrincipal = true;
             Top_K.OrderIndex = orderIndex++;
@@ -202,24 +210,28 @@ namespace UiPath.Activities.Exaone.ViewModels
 
             MinimumScore.DisplayName = Resources.MinimumScore_DisplayName;
             MinimumScore.Tooltip = Resources.MinimumScore_Tooltip;
+            MinimumScore.Placeholder = Resources.MinimumScore_Placeholder;
             MinimumScore.IsRequired = false;
             MinimumScore.IsPrincipal = true;
             MinimumScore.OrderIndex = orderIndex++;
 
             FilePath.DisplayName = Resources.FilePath_DisplayName;
             FilePath.Tooltip = Resources.FilePath_Tooltip;
+            FilePath.Placeholder = Resources.FilePath_Placeholder;
             FilePath.IsRequired = false;
             FilePath.IsPrincipal = true;
             FilePath.OrderIndex = orderIndex++;
 
             RawTextInput.DisplayName = Resources.RawTextInput_DisplayName;
             RawTextInput.Tooltip = Resources.RawTextInput_Tooltip;
+            RawTextInput.Placeholder = Resources.RawTextInput_Placeholder;
             RawTextInput.IsRequired = false;
             RawTextInput.IsPrincipal = true;
             RawTextInput.OrderIndex = orderIndex++;
 
             Url.DisplayName = Resources.Url_DisplayName;
             Url.Tooltip = Resources.Url_Tooltip;
+            Url.Placeholder = Resources.Url_Placeholder;
             Url.IsRequired = false;
             Url.IsPrincipal = true;
             Url.OrderIndex = orderIndex++;
