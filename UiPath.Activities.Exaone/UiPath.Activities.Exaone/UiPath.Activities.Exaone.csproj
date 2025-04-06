@@ -1,13 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<PackageId>UiPath.Activities.Exaone.Activities</PackageId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AssemblyName>UiPath.Activities.Exaone</AssemblyName>
+		<PackageId>UiPath.Activities.Exaone</PackageId>
+		<Authors>KCC정보통신 DX서비스팀</Authors>
+		<Description>Exaone 콘텐츠 생성용 액티비티입니다.</Description>
+		<PackageTags>UiPathActivities;Exaone;ContentGeneration</PackageTags>
+		<Product>UiPath.Activities.Exaone</Product>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageOutputPath>..\Output\Activities\Packages\</PackageOutputPath>
 
-  <ItemGroup>
+		<!-- 릴리즈용 고정 버전 -->
+		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.0</VersionPrefix>
+
+		<!-- 디버그용 - 날짜 기반 자동 버전 -->
+		<VersionBuild>$([System.DateTime]::UtcNow.DayOfYear.ToString("F0"))</VersionBuild>
+		<VersionRevision>$([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes.ToString("F0"))</VersionRevision>
+		<VersionPrefix Condition="'$(Configuration)' == 'Debug'">1.0.$(VersionBuild)-dev.$(VersionRevision)</VersionPrefix>
+
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+	</PropertyGroup>
+
+	<ItemGroup>
     <None Remove="Resources\ActivitiesMetadata.json" />
   </ItemGroup>
 
