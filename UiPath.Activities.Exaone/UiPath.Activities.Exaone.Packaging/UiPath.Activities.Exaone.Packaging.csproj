@@ -13,8 +13,9 @@
 		<PackageId>UiPath.Activities.Exaone</PackageId>
 		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.0</VersionPrefix>
 		<VersionPrefix Condition="'$(Configuration)' == 'Debug'">1.0.$(VersionBuild)-dev.$(VersionRevision)</VersionPrefix>
-		<Authors>UiPath</Authors>
-		<PackageTags>UiPathActivities</PackageTags>
+		<Authors>KCC정보통신 DX서비스팀</Authors>
+		<Description>Exaone 콘텐츠 생성용 액티비티입니다.</Description>
+		<PackageTags>UiPathActivities;Exaone;ContentGeneration</PackageTags>
 		<Product>UiPath.Activities.Exaone.Packaging</Product>
 		<PackageIconUrl>https://download.uipath.com/UI_icon.png?web</PackageIconUrl>
 		<PackageOutputPath>..\Output\Activities\Packages\</PackageOutputPath>
