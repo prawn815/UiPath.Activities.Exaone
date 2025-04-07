@@ -136,10 +136,10 @@ namespace UiPath.Activities.Exaone.ViewModels
             {
                 var selected = prop.Value;
 
-                // Top_K, Score는 SearchQuery, FileResource, RawText, WebPage 사용
+                // Top_K, Score는 SearchQuery, FileResource, Text, WebPage 사용
                 bool showOptions = selected == ContextGroundingType.SearchQuery ||
                                          selected == ContextGroundingType.FileResource ||
-                                         selected == ContextGroundingType.RawText ||
+                                         selected == ContextGroundingType.Text ||
                                          selected == ContextGroundingType.WebPage;
 
                 Top_K.IsVisible = showOptions;
@@ -147,7 +147,7 @@ namespace UiPath.Activities.Exaone.ViewModels
 
                 SearchQuery.IsVisible = selected == ContextGroundingType.SearchQuery;
                 FilePath.IsVisible = selected == ContextGroundingType.FileResource;
-                RawTextInput.IsVisible = selected == ContextGroundingType.RawText;
+                RawTextInput.IsVisible = selected == ContextGroundingType.Text;
                 Url.IsVisible = selected == ContextGroundingType.WebPage;
 
                 // 드롭박스 변경 시 기존 입력 값 초기화
@@ -157,7 +157,7 @@ namespace UiPath.Activities.Exaone.ViewModels
                 if (selected != ContextGroundingType.FileResource)
                     FilePath.Value = string.Empty;
 
-                if (selected != ContextGroundingType.RawText)
+                if (selected != ContextGroundingType.Text)
                     RawTextInput.Value = string.Empty;
 
                 if (selected != ContextGroundingType.WebPage)
@@ -176,7 +176,7 @@ namespace UiPath.Activities.Exaone.ViewModels
                     // context grounding이 4가지 중 하나일 때만 반응
                     bool showMinimumScore = ContextGrounding.Value == ContextGroundingType.SearchQuery ||
                                                 ContextGrounding.Value == ContextGroundingType.FileResource ||
-                                                ContextGrounding.Value == ContextGroundingType.RawText ||
+                                                ContextGrounding.Value == ContextGroundingType.Text ||
                                                 ContextGrounding.Value == ContextGroundingType.WebPage;
 
                     MinimumScore.IsVisible = prop.Value && showMinimumScore;

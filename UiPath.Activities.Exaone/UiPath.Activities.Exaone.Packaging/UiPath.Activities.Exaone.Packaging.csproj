@@ -46,10 +46,17 @@
 		</ItemGroup>
 		<Delete Files="@(PackageFilesToDelete)" ContinueOnError="WarnAndContinue" />
 	</Target>
-	
+
 	<ItemGroup>
 		<ProjectReference Include="..\UiPath.Activities.Exaone\UiPath.Activities.Exaone.csproj">
 			<PrivateAssets>All</PrivateAssets>
 		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\UiPath.Activities.Exaone\bin\Release\net6.0\UiPath.Platform.dll">
+			<Pack>true</Pack>
+			<PackagePath>lib/net6.0/</PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 </Project>

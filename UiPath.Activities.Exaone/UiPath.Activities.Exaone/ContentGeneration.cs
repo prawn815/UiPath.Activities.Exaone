@@ -3,6 +3,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
+using UiPath.Platform.ResourceHandling;
 
 namespace UiPath.Activities.Exaone
 {
@@ -155,7 +156,7 @@ namespace UiPath.Activities.Exaone
                             break;
                         }
 
-                    case ContextGroundingType.RawText:
+                    case ContextGroundingType.Text:
                         {
                             string rawText = rawTextInput;
                             string uploadResult = Task.Run(() => UploadRawTextToChromaDB(rawText)).Result;
@@ -223,22 +224,6 @@ namespace UiPath.Activities.Exaone
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
                 }
                 // ApiKey가 없으면 Authorization 헤더를 생략 (추가하지 않음)
-
-
-                /*  API 키 최종 확인 후 제거
-                // 🔹 Authorization 헤더 설정
-                if (string.IsNullOrWhiteSpace(apiKey))
-                {
-                    // ApiKey가 없으면 기본 Bearer 키 사용
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer 02B0BE994D0FC5939BF7E890372505A0");
-                }
-                else
-                {
-                    // ApiKey가 있으면 그대로 추가 (Bearer 없이)
-                    client.DefaultRequestHeaders.Add("Authorization", apiKey);
-                }
-                */
-
 
                 // 요청 데이터 구성
                 // 🔹 유저 프롬프트 + context 조합
@@ -330,13 +315,34 @@ namespace UiPath.Activities.Exaone
         // 🔹 ChromaDB에 파일 업로드 (File 기반 컨텍스트 - txt 파일만)
         private async Task<string> UploadFileToChromaDB(string filePath)
         {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException($"File not found at path: {filePath}");
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentException("파일 경로가 비어 있습니다.");
+
+            string fileName = Path.GetFileName(filePath);
+            string fileText = "";
+
+            // 환경 판별
+            bool isWeb = 
+                Environment.GetEnvironmentVariable("UIPATH_SERVERLESS_CONTEXT") == "true" ||
+                Environment.GetEnvironmentVariable("UIPATH_ENVIRONMENT_TAG") == "Serverless";
+
+            if (isWeb && filePath.StartsWith(".local", StringComparison.OrdinalIgnoreCase))
+            {
+                // Studio Web, Storage Bucket에서 불러오기
+                var resource = LocalResource.FromPath(filePath);
+                fileText = await File.ReadAllTextAsync(resource.FullName, Encoding.UTF8);
+            }
+            else
+            {
+                // Studio (Desktop) 로컬 경로 직접 접근
+                if (!File.Exists(filePath))
+                    throw new FileNotFoundException($"File not found at path: {filePath}");
+
+                fileText = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
+            }
 
             using (HttpClient client = new HttpClient())
             {
-                string fileName = Path.GetFileName(filePath);
-                string fileText = await File.ReadAllTextAsync(filePath, Encoding.UTF8); // 텍스트 파일 읽기
 
                 var requestData = new
                 {
@@ -408,7 +414,7 @@ namespace UiPath.Activities.Exaone
         None,             // 컨텍스트 없이 실행
         SearchQuery,    // 검색쿼리(검색어)를 통한 검색
         FileResource,     // 로컬 파일 업로드 (경로)
-        RawText,          // 직접 텍스트 입력
+        Text,          // 직접 텍스트 입력
         WebPage          // 웹 페이지 URL로부터 컨텍스트
     }
 
