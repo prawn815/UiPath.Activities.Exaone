@@ -11,13 +11,13 @@
             "viewModelType": "UiPath.Activities.Exaone.ViewModels.ContentGenerationViewModel"
         },
         {
-            "fullName": "UiPath.Activities.Exaone.GetFullDatabase",
-            "shortName": "GetFullDatabase",
-            "displayNameKey": "GetFullDatabase_DisplayName",
-            "descriptionKey": "GetFullDatabase_Description",
+            "fullName": "UiPath.Activities.Exaone.GetDatabase",
+            "shortName": "GetDatabase",
+            "displayNameKey": "GetDatabase_DisplayName",
+            "descriptionKey": "GetDatabase_Description",
             "categoryKey": "Exaone",
-            "iconKey": "GetFullDatabase.svg",
-            "viewModelType": "UiPath.Activities.Exaone.ViewModels.GetFullDatabaseViewModel"
+            "iconKey": "GetDatabase.svg",
+            "viewModelType": "UiPath.Activities.Exaone.ViewModels.GetDatabaseViewModel"
         },
         {
             "fullName": "UiPath.Activities.Exaone.ClearDatabase",

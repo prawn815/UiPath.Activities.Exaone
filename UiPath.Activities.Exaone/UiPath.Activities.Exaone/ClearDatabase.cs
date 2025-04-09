@@ -8,6 +8,9 @@ namespace UiPath.Activities.Exaone
 {
     public class ClearDatabase : CodeActivity<string> // result: 전체 json 문자열
     {
+        // 🔹 Collection 입력값
+        public InArgument<string> CollectionName { get; set; }
+
         // 🔹 상태 코드 (200, 400 등)
         public OutArgument<int> StatusCode { get; set; }
 
@@ -22,9 +25,18 @@ namespace UiPath.Activities.Exaone
 
         private async Task<string> ClearDBAsync(CodeActivityContext context)
         {
+            string collection = CollectionName.Get(context);
+            // 사용자가 주입한 값이 없는 경우 : default
+            if (string.IsNullOrWhiteSpace(collection))
+            {
+                collection = "default";
+            }
+
+            string requestUrl = $"http://exaone.myrobots.co.kr/db/?collection={Uri.EscapeDataString(collection)}";
+
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.DeleteAsync("http://exaone.myrobots.co.kr/db/");
+                HttpResponseMessage response = await client.DeleteAsync(requestUrl);
                 string content = await response.Content.ReadAsStringAsync();
 
                 context.SetValue(StatusCode, (int)response.StatusCode);

@@ -1,5 +1,6 @@
 ﻿using System.Activities;
 using System.Activities.DesignViewModels;
+using System.Collections;
 using UiPath.Activities.Exaone.Extensions;
 
 namespace UiPath.Activities.Exaone.ViewModels
@@ -26,6 +27,9 @@ namespace UiPath.Activities.Exaone.ViewModels
 
         // 🔹 컨텍스트 그라운딩 방식 선택
         public DesignProperty<ContextGroundingType> ContextGrounding { get; set; }
+
+        // 🔹 Collection 입력값
+        public DesignInArgument<string> CollectionName { get; set; }
 
         // 🔹 Query 기반 조회를 위한 속성 : 검색 쿼리
         public DesignInArgument<string> SearchQuery { get; set; }
@@ -122,6 +126,7 @@ namespace UiPath.Activities.Exaone.ViewModels
             ContextGrounding.OrderIndex = orderIndex++;
 
             // 컨텍스트 그라운딩 하위 속성 visible false
+            CollectionName.IsVisible = false;
             SearchQuery.IsVisible = false;
             Top_K.IsVisible = false;
             Score.IsVisible = false;
@@ -136,12 +141,13 @@ namespace UiPath.Activities.Exaone.ViewModels
             {
                 var selected = prop.Value;
 
-                // Top_K, Score는 SearchQuery, FileResource, Text, WebPage 사용
+                // CollectionName, Top_K, Score는 SearchQuery, FileResource, Text, WebPage 사용
                 bool showOptions = selected == ContextGroundingType.SearchQuery ||
                                          selected == ContextGroundingType.FileResource ||
                                          selected == ContextGroundingType.Text ||
                                          selected == ContextGroundingType.WebPage;
 
+                CollectionName.IsVisible = showOptions;
                 Top_K.IsVisible = showOptions;
                 Score.IsVisible = showOptions;
 
@@ -163,8 +169,10 @@ namespace UiPath.Activities.Exaone.ViewModels
                 if (selected != ContextGroundingType.WebPage)
                     Url.Value = string.Empty;
 
+                // 컨텍스트 그라운딩 옵션을 변경하면 기존 값 초기화
                 if (!showOptions)
                 {
+                    CollectionName = new DesignInArgument<string>();
                     Top_K.Value = 1;
                     Score.Value = true;
                     MinimumScore.Value = 0.0;
@@ -185,8 +193,14 @@ namespace UiPath.Activities.Exaone.ViewModels
                     if (!prop.Value)
                         MinimumScore.Value = 0.0;
                 });
-
             });
+
+            CollectionName.DisplayName = Resources.CollectionName_DisplayName;
+            CollectionName.Tooltip = Resources.CollectionName_Tooltip;
+            CollectionName.Placeholder = Resources.CollectionName_Placeholder;
+            CollectionName.IsRequired = false;
+            CollectionName.IsPrincipal = true;
+            CollectionName.OrderIndex = orderIndex++;
 
             SearchQuery.DisplayName = Resources.SearchQuery_DisplayName;
             SearchQuery.Tooltip = Resources.SearchQuery_Tooltip;

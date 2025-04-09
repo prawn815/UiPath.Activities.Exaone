@@ -33,6 +33,9 @@ namespace UiPath.Activities.Exaone
         // 🔹 컨텍스트 그라운딩 방식 선택
         public ContextGroundingType ContextGrounding { get; set; } = ContextGroundingType.None;
 
+        // 🔹 Collection 입력값 (선택, 기본값 : default)
+        public InArgument<string> CollectionName { get; set; }
+
         // 🔹 Query 기반 조회를 위한 속성 : 검색 쿼리
         public InArgument<string> SearchQuery { get; set; } = "";
 
@@ -43,7 +46,7 @@ namespace UiPath.Activities.Exaone
         public bool Score { get; set; } = true;
 
         // 🔹 컨텍스트 그라운딩 자료 인용 시 최소 스코어
-        public InArgument<double> MinimumScore { get; set; } = 0.0;
+        public InArgument<double> MinimumScore { get; set; } = 1.0;
 
         // 🔹 파일 기반 조회를 위한 속성
         public InArgument<string> FilePath { get; set; } = "";
@@ -73,6 +76,9 @@ namespace UiPath.Activities.Exaone
             string model = Model.Get(context) ?? "";
             double temperature = Temperature.Get(context);
             ContextGroundingType groundingType = ContextGrounding;
+            string collection = CollectionName.Get(context)?.Trim();
+            if (string.IsNullOrWhiteSpace(collection))
+                collection = "default";
             string searchQuery = SearchQuery.Get(context);
             int top_k = Math.Min(5, Math.Max(1, Top_K.Get(context)));   // 최소 1 , 최대 5개까지만 제한
             bool score = Score;
@@ -91,6 +97,7 @@ namespace UiPath.Activities.Exaone
                 model,
                 temperature,
                 groundingType,
+                collection,
                 searchQuery,
                 top_k,
                 score,
@@ -118,6 +125,7 @@ namespace UiPath.Activities.Exaone
             string model,
             double temperature,
             ContextGroundingType groundingType,
+            string collection,
             string searchQuery,
             int top_k,
             bool score,
@@ -140,18 +148,19 @@ namespace UiPath.Activities.Exaone
                 switch (groundingType)
                 {
                     case ContextGroundingType.SearchQuery:
-                        vectorData = Task.Run(() => QueryChromaDB(searchQuery, top_k, score, minimumScore)).Result;
+                        vectorData = Task.Run(() => QueryChromaDB(searchQuery, top_k, score, minimumScore, collection)).Result;
                         citationText = vectorData;
                         break;
 
                     case ContextGroundingType.FileResource:
                         {
                             // 파일 업로드
-                            string uploadResult = Task.Run(() => UploadFileToChromaDB(filePath)).Result;
+                            string uploadResult = Task.Run(() => UploadFileToChromaDB(filePath, collection)).Result;
+                            Console.WriteLine($"✔ 파일 텍스트 업로드 성공: {uploadResult}");
 
                             // 파일명 기반 쿼리 수행
                             string fileName = Path.GetFileName(filePath);   // 정확성을 위해 확장자 포함
-                            vectorData = Task.Run(() => QueryChromaDB(fileName, top_k, score, minimumScore)).Result;
+                            vectorData = Task.Run(() => QueryChromaDB(fileName, top_k, score, minimumScore, collection)).Result;
                             citationText = vectorData;
                             break;
                         }
@@ -159,21 +168,23 @@ namespace UiPath.Activities.Exaone
                     case ContextGroundingType.Text:
                         {
                             string rawText = rawTextInput;
-                            string uploadResult = Task.Run(() => UploadRawTextToChromaDB(rawText)).Result;
+                            string uploadResult = Task.Run(() => UploadRawTextToChromaDB(rawText, collection)).Result;
+                            Console.WriteLine($"✔ 텍스트 업로드 성공: {uploadResult}");
 
                             // 입력 텍스트 앞부분으로 쿼리 수행 (텍스트 100자로 절삭)
                             string queryPreview = rawText.Length > 100 ? rawText.Substring(0, 100) : rawText;
-                            vectorData = Task.Run(() => QueryChromaDB(queryPreview, top_k, score, minimumScore)).Result;
+                            vectorData = Task.Run(() => QueryChromaDB(queryPreview, top_k, score, minimumScore, collection)).Result;
                             citationText = vectorData;
                             break;
                         }
 
                     case ContextGroundingType.WebPage:
                         {
-                            string uploadResult = Task.Run(() => LoadWebPage(url)).Result;
+                            string uploadResult = Task.Run(() => LoadWebPage(url, collection)).Result;
+                            Console.WriteLine($"✔ 웹페이지 업로드 성공: {uploadResult}");
 
                             // 🔹 전체 URL로 검색 수행 (정확 매칭을 위해)
-                            vectorData = Task.Run(() => QueryChromaDB(url, top_k, score, minimumScore)).Result;
+                            vectorData = Task.Run(() => QueryChromaDB(url, top_k, score, minimumScore, collection)).Result;
                             citationText = vectorData;
                             break;
                         }
@@ -274,15 +285,17 @@ namespace UiPath.Activities.Exaone
         }
 
         // 🔹 ChromaDB에서 검색 쿼리 기반 컨텍스트 검색
-        private async Task<string> QueryChromaDB(string searchquery, int top_k, bool score, double minimumScore)
+        private async Task<string> QueryChromaDB(string searchquery, int top_k, bool score, double minimumScore, string collection)
         {
             using (HttpClient client = new HttpClient())
             {
+                string requestUrl = $"http://exaone.myrobots.co.kr/db/query?collection={Uri.EscapeDataString(collection)}";
+
                 var requestData = new { query = searchquery, top_k = top_k, score = score };
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("http://exaone.myrobots.co.kr/db/query", content);
+                HttpResponseMessage response = await client.PostAsync(requestUrl, content);
                 string result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
@@ -300,7 +313,7 @@ namespace UiPath.Activities.Exaone
                             .Where(item =>
                                 item["score"] != null &&
                                 double.TryParse(item["score"].ToString(), out double s) &&
-                                s >= minimumScore
+                                s <= minimumScore
                             )
                     );
 
@@ -313,8 +326,9 @@ namespace UiPath.Activities.Exaone
         }
 
         // 🔹 ChromaDB에 파일 업로드 (File 기반 컨텍스트 - txt 파일만)
-        private async Task<string> UploadFileToChromaDB(string filePath)
+        private async Task<string> UploadFileToChromaDB(string filePath, string collection)
         {
+            // 파일 경로 빈값 예외처리
             if (string.IsNullOrWhiteSpace(filePath))
                 throw new ArgumentException("파일 경로가 비어 있습니다.");
 
@@ -322,13 +336,13 @@ namespace UiPath.Activities.Exaone
             string fileText = "";
 
             // 환경 판별
-            bool isWeb = 
+            bool isWeb =
                 Environment.GetEnvironmentVariable("UIPATH_SERVERLESS_CONTEXT") == "true" ||
                 Environment.GetEnvironmentVariable("UIPATH_ENVIRONMENT_TAG") == "Serverless";
 
-            if (isWeb && filePath.StartsWith(".local", StringComparison.OrdinalIgnoreCase))
+            if (isWeb)
             {
-                // Studio Web, Storage Bucket에서 불러오기
+                // Studio Web, Storage Bucket에서 받은 파일 불러오기
                 var resource = LocalResource.FromPath(filePath);
                 fileText = await File.ReadAllTextAsync(resource.FullName, Encoding.UTF8);
             }
@@ -336,13 +350,15 @@ namespace UiPath.Activities.Exaone
             {
                 // Studio (Desktop) 로컬 경로 직접 접근
                 if (!File.Exists(filePath))
-                    throw new FileNotFoundException($"File not found at path: {filePath}");
+                    throw new FileNotFoundException($"파일을 찾을 수 없습니다: {filePath}");
 
                 fileText = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
             }
 
             using (HttpClient client = new HttpClient())
             {
+
+                string requestUrl = $"http://exaone.myrobots.co.kr/db/text?collection={Uri.EscapeDataString(collection)}";
 
                 var requestData = new
                 {
@@ -353,7 +369,7 @@ namespace UiPath.Activities.Exaone
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("http://exaone.myrobots.co.kr/db/text", content);
+                HttpResponseMessage response = await client.PostAsync(requestUrl, content);
                 string result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
@@ -364,13 +380,15 @@ namespace UiPath.Activities.Exaone
         }
 
         // 🔹 사용자가 입력한 텍스트를 ChromaDB에 업로드 (Text 기반 컨텍스트)
-        private async Task<string> UploadRawTextToChromaDB(string rawText)
+        private async Task<string> UploadRawTextToChromaDB(string rawText, string collection)
         {
             if (string.IsNullOrWhiteSpace(rawText))
                 throw new ArgumentException("RawText input is empty.");
 
             using (HttpClient client = new HttpClient())
             {
+                string requestUrl = $"http://exaone.myrobots.co.kr/db/text?collection={Uri.EscapeDataString(collection)}";
+
                 var requestData = new
                 {
                     title = "RawText Input", // 내부적으로 고정 (타이틀 반영 여부 확인 필요)
@@ -380,7 +398,7 @@ namespace UiPath.Activities.Exaone
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("http://exaone.myrobots.co.kr/db/text", content);
+                HttpResponseMessage response = await client.PostAsync(requestUrl, content);
                 string result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
@@ -391,15 +409,17 @@ namespace UiPath.Activities.Exaone
         }
 
         // 🔹 웹페이지 URL을 DB에 로드 (POST /webpage)
-        private async Task<string> LoadWebPage(string url)
+        private async Task<string> LoadWebPage(string url, string collection)
         {
             using (HttpClient client = new HttpClient())
             {
+                string requestUrl = $"http://exaone.myrobots.co.kr/db/webpage?collection={Uri.EscapeDataString(collection)}";
+
                 var requestData = new { url = url };
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("http://exaone.myrobots.co.kr/db/webpage", content);
+                HttpResponseMessage response = await client.PostAsync(requestUrl, content);
                 string result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)

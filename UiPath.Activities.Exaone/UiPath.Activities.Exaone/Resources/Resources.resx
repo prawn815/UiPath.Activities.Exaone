@@ -178,7 +178,8 @@
     <comment>property name</comment>
   </data>
   <data name="Top_K_Tooltip" xml:space="preserve">
-    <value>응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색된 결과 수입니다.)</value>
+    <value>응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색되는 최대 개수입니다)
+※ '유사도 점수 제한' 설정 시, 실제 사용되는 개수는 이보다 적을 수 있습니다.</value>
     <comment>property</comment>
   </data>
   <data name="FilePath_DisplayName" xml:space="preserve">
@@ -238,12 +239,12 @@
     <value>Exaone API가 생성한 응답 중 가장 많이 생성된 텍스트입니다.</value>
     <comment>property</comment>
   </data>
-  <data name="GetFullDatabase_DisplayName" xml:space="preserve">
-    <value>전체 데이터베이스 가져오기</value>
+  <data name="GetDatabase_DisplayName" xml:space="preserve">
+    <value>데이터베이스 가져오기</value>
     <comment>activity name</comment>
   </data>
-  <data name="GetFullDatabase_Description" xml:space="preserve">
-    <value>데이터베이스 내 모든 데이터를 가져옵니다.</value>
+  <data name="GetDatabase_Description" xml:space="preserve">
+    <value>데이터베이스 내 데이터를 가져옵니다.</value>
     <comment>activity description</comment>
   </data>
   <data name="StatusCode_DisplayName" xml:space="preserve">
@@ -295,12 +296,15 @@
     <comment>property</comment>
   </data>
   <data name="MinimumScore_DisplayName" xml:space="preserve">
-    <value>최소 유사도 점수</value>
+    <value>유사도 점수 제한</value>
     <comment>property name</comment>
   </data>
   <data name="MinimumScore_Tooltip" xml:space="preserve">
-    <value>컨텍스트에 포함될 최소 유사도 점수를 지정합니다.
-지정된 값보다 낮은 결과는 제외됩니다. (0~1 사이)</value>
+    <value>컨텍스트에 포함될 유사도 점수를 지정합니다.
+이 점수보다 높은 유사도는 제외됩니다.
+(0에 가까울수록 더 유사하며, 1에 가까울수록 관련성이 낮습니다.)
+0일 경우 모든 결과를 출력합니다.
+※ 모든 결과를 출력하여 사용할 경우 </value>
     <comment>property</comment>
   </data>
   <data name="CitationText_DisplayName" xml:space="preserve">
@@ -357,6 +361,20 @@
   </data>
   <data name="SearchQuery_Placeholder" xml:space="preserve">
     <value>검색하고 싶은 텍스트를 입력하세요. (예: 키워드, 문장 등)</value>
+    <comment>property placeholder</comment>
+  </data>
+  <data name="CollectionName_DisplayName" xml:space="preserve">
+    <value>컬렉션</value>
+    <comment>property name</comment>
+  </data>
+  <data name="CollectionName_Tooltip" xml:space="preserve">
+    <value>DB에서 구분할 컬렉션 이름을 지정합니다.
+컬렉션은 컨텍스트 데이터를 분리하여 저장하거나 조회하는 용도로 사용됩니다.
+(선택 사항)</value>
+    <comment>property</comment>
+  </data>
+  <data name="CollectionName_Placeholder" xml:space="preserve">
+    <value>컬렉션명을 입력합니다.</value>
     <comment>property placeholder</comment>
   </data>
 </root>

@@ -5,6 +5,9 @@ namespace UiPath.Activities.Exaone.ViewModels
 {
     public class ClearDatabaseViewModel : DesignPropertiesViewModel
     {
+        // 🔹 Collection 입력값
+        public DesignInArgument<string> CollectionName { get; set; }
+
         // 🔹 API StatusCode
         public DesignOutArgument<int> StatusCode { get; set; }
 
@@ -28,6 +31,13 @@ namespace UiPath.Activities.Exaone.ViewModels
             PersistValuesChangedDuringInit(); // mandatory call only when you change the values of properties during initialization
 
             var orderIndex = 0;
+
+            CollectionName.DisplayName = Resources.CollectionName_DisplayName;
+            CollectionName.Tooltip = Resources.CollectionName_Tooltip;
+            CollectionName.Placeholder = Resources.CollectionName_Placeholder;
+            CollectionName.IsRequired = false;
+            CollectionName.IsPrincipal = true;
+            CollectionName.OrderIndex = orderIndex++;
 
             StatusCode.DisplayName = Resources.StatusCode_DisplayName;
             StatusCode.Tooltip = Resources.StatusCode_Tooltip;

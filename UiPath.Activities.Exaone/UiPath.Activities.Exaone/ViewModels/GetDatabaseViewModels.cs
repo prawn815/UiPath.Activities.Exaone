@@ -3,8 +3,11 @@ using System.Activities.DesignViewModels;
 
 namespace UiPath.Activities.Exaone.ViewModels
 {
-    public class GetFullDatabaseViewModel : DesignPropertiesViewModel
+    public class GetDatabaseViewModel : DesignPropertiesViewModel
     {
+        // 🔹 Collection 입력값
+        public DesignInArgument<string> CollectionName { get; set; }
+
         // 🔹 API StatusCode
         public DesignOutArgument<int> StatusCode { get; set; }
 
@@ -14,7 +17,7 @@ namespace UiPath.Activities.Exaone.ViewModels
         // 🔹 전체 결과 json 문자열
         public DesignOutArgument<string> Result { get; set; }
 
-        public GetFullDatabaseViewModel(IDesignServices services) : base(services)
+        public GetDatabaseViewModel(IDesignServices services) : base(services)
         {
         }
 
@@ -28,6 +31,13 @@ namespace UiPath.Activities.Exaone.ViewModels
             PersistValuesChangedDuringInit(); // mandatory call only when you change the values of properties during initialization
 
             var orderIndex = 0;
+
+            CollectionName.DisplayName = Resources.CollectionName_DisplayName;
+            CollectionName.Tooltip = Resources.CollectionName_Tooltip;
+            CollectionName.Placeholder = Resources.CollectionName_Placeholder;
+            CollectionName.IsRequired = false;
+            CollectionName.IsPrincipal = true;
+            CollectionName.OrderIndex = orderIndex++;
 
             StatusCode.DisplayName = Resources.StatusCode_DisplayName;
             StatusCode.Tooltip = Resources.StatusCode_Tooltip;

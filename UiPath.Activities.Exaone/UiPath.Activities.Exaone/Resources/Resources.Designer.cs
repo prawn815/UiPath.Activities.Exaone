@@ -124,6 +124,35 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   컬렉션과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string CollectionName_DisplayName {
+            get {
+                return ResourceManager.GetString("CollectionName_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   컬렉션명을 입력합니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string CollectionName_Placeholder {
+            get {
+                return ResourceManager.GetString("CollectionName_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   DB에서 구분할 컬렉션 이름을 지정합니다.
+        ///컬렉션은 컨텍스트 데이터를 분리하여 저장하거나 조회하는 용도로 사용됩니다.
+        ///(선택 사항)과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string CollectionName_Tooltip {
+            get {
+                return ResourceManager.GetString("CollectionName_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   채팅 자동 완성 모델을 사용하여 제공된 요청에 대한 채팅 응답 생성과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string ContentGeneration_Description {
@@ -233,6 +262,24 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
+        ///   데이터베이스 내 데이터를 가져옵니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string GetDatabase_Description {
+            get {
+                return ResourceManager.GetString("GetDatabase_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   데이터베이스 가져오기과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string GetDatabase_DisplayName {
+            get {
+                return ResourceManager.GetString("GetDatabase_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   결과 (JSON_string)과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string GetDBResult_DisplayName {
@@ -247,24 +294,6 @@ namespace UiPath.Activities.Exaone {
         public static string GetDBResult_Tooltip {
             get {
                 return ResourceManager.GetString("GetDBResult_Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   데이터베이스 내 모든 데이터를 가져옵니다.과(와) 유사한 지역화된 문자열을 찾습니다.
-        /// </summary>
-        public static string GetFullDatabase_Description {
-            get {
-                return ResourceManager.GetString("GetFullDatabase_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   전체 데이터베이스 가져오기과(와) 유사한 지역화된 문자열을 찾습니다.
-        /// </summary>
-        public static string GetFullDatabase_DisplayName {
-            get {
-                return ResourceManager.GetString("GetFullDatabase_DisplayName", resourceCulture);
             }
         }
         
@@ -305,7 +334,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   최소 유사도 점수과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   유사도 점수 제한과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string MinimumScore_DisplayName {
             get {
@@ -323,8 +352,11 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   컨텍스트에 포함될 최소 유사도 점수를 지정합니다.
-        ///지정된 값보다 낮은 결과는 제외됩니다. (0~1 사이)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   컨텍스트에 포함될 유사도 점수를 지정합니다.
+        ///이 점수보다 높은 유사도는 제외됩니다.
+        ///(0에 가까울수록 더 유사하며, 1에 가까울수록 관련성이 낮습니다.)
+        ///0일 경우 모든 결과를 출력합니다.
+        ///※ 모든 결과를 출력하여 사용할 경우 과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string MinimumScore_Tooltip {
             get {
@@ -540,7 +572,8 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색된 결과 수입니다.)과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   응답에 참고할 컨텍스트 문서의 최대 개수를 설정합니다. (VectorDB에서 검색되는 최대 개수입니다)
+        ///※ &apos;유사도 점수 제한&apos; 설정 시, 실제 사용되는 개수는 이보다 적을 수 있습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Top_K_Tooltip {
             get {
