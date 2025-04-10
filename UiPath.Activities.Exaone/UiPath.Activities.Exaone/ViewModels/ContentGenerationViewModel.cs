@@ -172,10 +172,10 @@ namespace UiPath.Activities.Exaone.ViewModels
                 // 컨텍스트 그라운딩 옵션을 변경하면 기존 값 초기화
                 if (!showOptions)
                 {
-                    CollectionName = new DesignInArgument<string>();
+                    CollectionName.Value = string.Empty;
                     Top_K.Value = 1;
                     Score.Value = true;
-                    MinimumScore.Value = 0.0;
+                    MinimumScore.Value = 1.0;
                 }
 
                 // Score 체크 여부에 따라 MinimumScore 표시 여부 갱신

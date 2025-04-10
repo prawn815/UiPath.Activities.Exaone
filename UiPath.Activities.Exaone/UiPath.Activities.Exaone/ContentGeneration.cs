@@ -1,5 +1,6 @@
 ﻿using System.Activities;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
@@ -242,6 +243,8 @@ namespace UiPath.Activities.Exaone
 
                 if (!string.IsNullOrWhiteSpace(vectorData))
                 {
+                    string cleanVectorData = CleanContextForPrompt(vectorData);
+
                     combinedPrompt = $@"
                     {userPrompt}
 
@@ -249,7 +252,7 @@ namespace UiPath.Activities.Exaone
                     위 질문에 대해 아래 CONTEXT를 참고해서 답변해줘. CONTEXT 외에 알 수 없는 내용은 모른다고 답변해줘.
 
                     ## CONTEXT ##
-                    {vectorData}
+                    {cleanVectorData}
                     ";
                 }
                 else
@@ -271,6 +274,7 @@ namespace UiPath.Activities.Exaone
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
+                //PrintCurlCommand(endpoint, apiKey, jsonData); //*
                 // API 호출
                 HttpResponseMessage response = await client.PostAsync(endpoint, content);
                 string result = await response.Content.ReadAsStringAsync();
@@ -428,6 +432,58 @@ namespace UiPath.Activities.Exaone
                 return result;
             }
         }
+
+
+
+        // LLM용 프롬프트로 정제
+        private static string CleanContextForPrompt(string vectorJson)
+        {
+            try
+            {
+                var obj = JObject.Parse(vectorJson);
+                var contextArray = obj["context"] as JArray;
+                if (contextArray == null || contextArray.Count == 0)
+                    return "";
+
+                var sb = new StringBuilder();
+
+                foreach (var item in contextArray)
+                {
+                    var content = item["page_content"]?.ToString();
+                    if (!string.IsNullOrWhiteSpace(content))
+                    {
+                        content = Regex.Replace(
+                                   content
+                                     .Replace("\n", " ")
+                                     .Replace("\r", " ")
+                                     .Replace("\t", " ")
+                                     .Replace("\"", "'"),
+                                       @"\s{2,}", " "
+                         ).Trim();
+                        sb.AppendLine("● " + content.Replace("\n", " ").Replace("\r", " ").Trim());
+                        sb.AppendLine();
+                    }
+                }
+
+                return sb.ToString();
+            }
+            catch
+            {
+                return vectorJson; // fallback
+            }
+        }
+        /*
+        //*
+        private void PrintCurlCommand(string endpoint, string apiKey, string jsonData)
+        {
+            Console.WriteLine("📡 재현용 curl:");
+            Console.WriteLine($"curl -X POST \"{endpoint}\" \\");
+            Console.WriteLine("  -H \"Content-Type: application/json\" \\");
+            if (!string.IsNullOrWhiteSpace(apiKey))
+                Console.WriteLine($"  -H \"Authorization: Bearer {apiKey}\" \\");
+            Console.WriteLine($"  -d '{jsonData.Replace("'", "\\'")}'");
+        }*/
+
     }
     public enum ContextGroundingType
     {
