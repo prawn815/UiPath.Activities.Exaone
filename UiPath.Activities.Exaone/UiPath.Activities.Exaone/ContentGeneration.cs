@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
+using UiPath.Activities.Exaone.Helpers;
 using UiPath.Platform.ResourceHandling;
 
 namespace UiPath.Activities.Exaone
@@ -243,7 +244,7 @@ namespace UiPath.Activities.Exaone
 
                 if (!string.IsNullOrWhiteSpace(vectorData))
                 {
-                    string cleanVectorData = CleanContextForPrompt(vectorData);
+                    string cleanVectorData = PromptFormatter.CleanContextForPrompt(vectorData);
 
                     combinedPrompt = $@"
                     {userPrompt}
@@ -433,45 +434,7 @@ namespace UiPath.Activities.Exaone
             }
         }
 
-
-
-        // LLM용 프롬프트로 정제
-        private static string CleanContextForPrompt(string vectorJson)
-        {
-            try
-            {
-                var obj = JObject.Parse(vectorJson);
-                var contextArray = obj["context"] as JArray;
-                if (contextArray == null || contextArray.Count == 0)
-                    return "";
-
-                var sb = new StringBuilder();
-
-                foreach (var item in contextArray)
-                {
-                    var content = item["page_content"]?.ToString();
-                    if (!string.IsNullOrWhiteSpace(content))
-                    {
-                        content = Regex.Replace(
-                                   content
-                                     .Replace("\n", " ")
-                                     .Replace("\r", " ")
-                                     .Replace("\t", " ")
-                                     .Replace("\"", "'"),
-                                       @"\s{2,}", " "
-                         ).Trim();
-                        sb.AppendLine("● " + content.Replace("\n", " ").Replace("\r", " ").Trim());
-                        sb.AppendLine();
-                    }
-                }
-
-                return sb.ToString();
-            }
-            catch
-            {
-                return vectorJson; // fallback
-            }
-        }
+        
         /*
         //*
         private void PrintCurlCommand(string endpoint, string apiKey, string jsonData)

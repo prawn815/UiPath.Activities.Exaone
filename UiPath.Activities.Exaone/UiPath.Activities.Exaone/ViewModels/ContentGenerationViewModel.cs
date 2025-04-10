@@ -191,7 +191,7 @@ namespace UiPath.Activities.Exaone.ViewModels
 
                     // 체크 해제되면 값 초기화
                     if (!prop.Value)
-                        MinimumScore.Value = 0.0;
+                        MinimumScore.Value = 1.0;
                 });
             });
 
