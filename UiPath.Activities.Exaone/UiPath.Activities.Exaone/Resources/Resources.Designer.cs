@@ -70,7 +70,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Exaon API키과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Exaone API키과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string ApiKey_Placeholder {
             get {
@@ -79,7 +79,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Exaon API키과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Exaone API키과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string ApiKey_Tooltip {
             get {
@@ -198,7 +198,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Exaon 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Exaone 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Endpoint_Placeholder {
             get {
@@ -207,7 +207,7 @@ namespace UiPath.Activities.Exaone {
         }
         
         /// <summary>
-        ///   Exaon 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   Exaone 엔드포인트과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string Endpoint_Tooltip {
             get {

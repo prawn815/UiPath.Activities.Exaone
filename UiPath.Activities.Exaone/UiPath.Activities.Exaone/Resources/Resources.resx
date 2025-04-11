@@ -284,7 +284,7 @@
     <comment>property name</comment>
   </data>
   <data name="Endpoint_Tooltip" xml:space="preserve">
-    <value>Exaon 엔드포인트</value>
+    <value>Exaone 엔드포인트</value>
     <comment>property</comment>
   </data>
   <data name="ApiKey_DisplayName" xml:space="preserve">
@@ -292,7 +292,7 @@
     <comment>property name</comment>
   </data>
   <data name="ApiKey_Tooltip" xml:space="preserve">
-    <value>Exaon API키</value>
+    <value>Exaone API키</value>
     <comment>property</comment>
   </data>
   <data name="MinimumScore_DisplayName" xml:space="preserve">
@@ -323,11 +323,11 @@
     <comment>property placeholder</comment>
   </data>
   <data name="ApiKey_Placeholder" xml:space="preserve">
-    <value>Exaon API키</value>
+    <value>Exaone API키</value>
     <comment>property placeholder</comment>
   </data>
   <data name="Endpoint_Placeholder" xml:space="preserve">
-    <value>Exaon 엔드포인트</value>
+    <value>Exaone 엔드포인트</value>
     <comment>property placeholder</comment>
   </data>
   <data name="SystemPrompt_Placeholder" xml:space="preserve">

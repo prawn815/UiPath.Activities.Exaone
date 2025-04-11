@@ -71,11 +71,15 @@ namespace UiPath.Activities.Exaone
 
         protected override string Execute(CodeActivityContext context)
         {
-            string endpoint = Endpoint.Get(context) ?? throw new ArgumentNullException("Endpoint는 필수입니다.");
+            string endpoint = Endpoint.Get(context);
+            if (string.IsNullOrWhiteSpace(endpoint))
+                throw new ArgumentException("Endpoint는 필수입니다.");
             string apiKey = ApiKey.Get(context);
             string userPrompt = UserPrompt.Get(context) ?? "";
             string systemPrompt = SystemPrompt.Get(context) ?? "";
-            string model = Model.Get(context) ?? "";
+            string model = Model.Get(context);
+            if (string.IsNullOrWhiteSpace(model))
+                throw new ArgumentException("모델 이름은 필수입니다.");
             double temperature = Temperature.Get(context);
             ContextGroundingType groundingType = ContextGrounding;
             string collection = CollectionName.Get(context)?.Trim();
