@@ -4,12 +4,12 @@
 		<OutputType>Library</OutputType>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<AssemblyName>UiPath.Activities.Exaone</AssemblyName>
-		<PackageId>UiPath.Activities.Exaone</PackageId>
+		<AssemblyName>KCCINC.Exaone.Activities</AssemblyName>
+		<PackageId>KCCINC.Exaone.Activities</PackageId>
 		<Authors>KCC정보통신 DX서비스팀</Authors>
 		<Description>Exaone 콘텐츠 생성용 액티비티입니다.</Description>
-		<PackageTags>UiPathActivities;Exaone;ContentGeneration</PackageTags>
-		<Product>UiPath.Activities.Exaone</Product>
+		<PackageTags>KCCINC;Exaone;ContentGeneration</PackageTags>
+		<Product>KCCINC.Exaone.Activities</Product>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageOutputPath>..\Output\Activities\Packages\</PackageOutputPath>
 
@@ -46,7 +46,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <CustomToolNamespace>UiPath.Activities.Exaone</CustomToolNamespace>
+      <CustomToolNamespace>KCCINC.Exaone.Activities</CustomToolNamespace>
     </Compile>
   </ItemGroup>
 
@@ -54,7 +54,7 @@
     <EmbeddedResource Update="Resources\Resources.resx">
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>UiPath.Activities.Exaone</CustomToolNamespace>
+      <CustomToolNamespace>KCCINC.Exaone.Activities</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 

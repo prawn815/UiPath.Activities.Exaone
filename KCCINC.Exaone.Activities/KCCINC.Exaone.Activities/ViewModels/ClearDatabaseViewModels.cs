@@ -1,9 +1,9 @@
 ﻿using System.Activities;
-using System.Activities.DesignViewModels;   
+using System.Activities.DesignViewModels;
 
-namespace UiPath.Activities.Exaone.ViewModels
+namespace KCCINC.Exaone.Activities.ViewModels
 {
-    public class GetDatabaseViewModel : DesignPropertiesViewModel
+    public class ClearDatabaseViewModel : DesignPropertiesViewModel
     {
         // 🔹 Collection 입력값
         public DesignInArgument<string> CollectionName { get; set; }
@@ -17,7 +17,7 @@ namespace UiPath.Activities.Exaone.ViewModels
         // 🔹 전체 결과 json 문자열
         public DesignOutArgument<string> Result { get; set; }
 
-        public GetDatabaseViewModel(IDesignServices services) : base(services)
+        public ClearDatabaseViewModel(IDesignServices services) : base(services)
         {
         }
 

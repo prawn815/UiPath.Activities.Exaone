@@ -1,0 +1,32 @@
+{
+  "resourceManagerName": "KCCINC.Exaone.Activities.Resources.Resources",
+  "activities": [
+    {
+      "fullName": "KCCINC.Exaone.Activities.ContentGeneration",
+      "shortName": "ContentGeneration",
+      "displayNameKey": "ContentGeneration_DisplayName",
+      "descriptionKey": "ContentGeneration_Description",
+      "categoryKey": "Exaone",
+      "iconKey": "ContentGeneration.svg",
+      "viewModelType": "KCCINC.Exaone.Activities.ViewModels.ContentGenerationViewModel"
+    },
+    {
+      "fullName": "KCCINC.Exaone.Activities.GetDatabase",
+      "shortName": "GetDatabase",
+      "displayNameKey": "GetDatabase_DisplayName",
+      "descriptionKey": "GetDatabase_Description",
+      "categoryKey": "Exaone",
+      "iconKey": "GetDatabase.svg",
+      "viewModelType": "KCCINC.Exaone.Activities.ViewModels.GetDatabaseViewModel"
+    },
+    {
+      "fullName": "KCCINC.Exaone.Activities.ClearDatabase",
+      "shortName": "ClearDatabase",
+      "displayNameKey": "ClearDatabase_DisplayName",
+      "descriptionKey": "ClearDatabase_Description",
+      "categoryKey": "Exaone",
+      "iconKey": "ClearDatabase.svg",
+      "viewModelType": "KCCINC.Exaone.Activities.ViewModels.ClearDatabaseViewModel"
+    }
+  ]
+}

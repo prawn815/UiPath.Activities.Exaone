@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCCINC.Exaone.Activities", "KCCINC.Exaone.Activities\KCCINC.Exaone.Activities\KCCINC.Exaone.Activities.csproj", "{2A9E5D05-9AB1-4339-8A60-05D3B5DF4C73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCCINC.Exaone.Activities.Packaging", "KCCINC.Exaone.Activities\KCCINC.Exaone.Activities.Packaging\KCCINC.Exaone.Activities.Packaging.csproj", "{E3C5AC7D-875A-806F-4676-4260E8DAEB2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A9E5D05-9AB1-4339-8A60-05D3B5DF4C73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A9E5D05-9AB1-4339-8A60-05D3B5DF4C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A9E5D05-9AB1-4339-8A60-05D3B5DF4C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A9E5D05-9AB1-4339-8A60-05D3B5DF4C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C5AC7D-875A-806F-4676-4260E8DAEB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C5AC7D-875A-806F-4676-4260E8DAEB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C5AC7D-875A-806F-4676-4260E8DAEB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C5AC7D-875A-806F-4676-4260E8DAEB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50D2F897-B2CC-469F-866A-D1A1C1416ACA}
+	EndGlobalSection
+EndGlobal

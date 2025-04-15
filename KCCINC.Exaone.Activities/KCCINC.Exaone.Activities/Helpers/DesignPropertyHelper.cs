@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Activities.DesignViewModels;
 
-namespace UiPath.Activities.Exaone.Extensions
+namespace KCCINC.Exaone.Activities.Helpers
 {
     public static class TrackValueExtension
     {

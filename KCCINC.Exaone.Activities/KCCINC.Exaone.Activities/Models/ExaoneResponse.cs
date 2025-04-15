@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UiPath.Activities.Exaone.Models
+namespace KCCINC.Exaone.Activities.Models
 {
     // 🔹 Exaone API 응답 모델
     public class ExaoneResponse

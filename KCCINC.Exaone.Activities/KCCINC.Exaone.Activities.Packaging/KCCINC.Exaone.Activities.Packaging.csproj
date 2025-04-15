@@ -10,13 +10,13 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<VersionBuild>$([System.DateTime]::UtcNow.DayOfYear.ToString("F0"))</VersionBuild>
 		<VersionRevision>$([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes.ToString("F0"))</VersionRevision>
-		<PackageId>UiPath.Activities.Exaone</PackageId>
-		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.2</VersionPrefix>
+		<PackageId>KCCINC.Exaone.Activities</PackageId>
+		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.0</VersionPrefix>
 		<VersionPrefix Condition="'$(Configuration)' == 'Debug'">1.0.$(VersionBuild)-dev.$(VersionRevision)</VersionPrefix>
 		<Authors>KCC정보통신 DX서비스팀</Authors>
 		<Description>Exaone 콘텐츠 생성용 액티비티입니다.</Description>
-		<PackageTags>UiPathActivities;Exaone;ContentGeneration</PackageTags>
-		<Product>UiPath.Activities.Exaone.Packaging</Product>
+		<PackageTags>KCCINC;Exaone;ContentGeneration</PackageTags>
+		<Product>KCCINC.Exaone.Activities.Packaging</Product>
 		<PackageIconUrl>https://download.uipath.com/UI_icon.png?web</PackageIconUrl>
 		<PackageOutputPath>..\Output\Activities\Packages\</PackageOutputPath>
 		<TargetsForTfmSpecificBuildOutput>AddDlls</TargetsForTfmSpecificBuildOutput>
@@ -26,10 +26,10 @@
 	<Target Name="AddDlls">
 		<!-- PDBs for debug-->
 		<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-			<BuildOutputInPackage Include="$(OutputPath)UiPath.Activities.Exaone.pdb" />
+			<BuildOutputInPackage Include="$(OutputPath)KCCINC.Exaone.Activities.pdb" />
 		</ItemGroup>
 		<ItemGroup>
-			<BuildOutputInPackage Include="$(OutputPath)UiPath.Activities.Exaone.dll" />
+			<BuildOutputInPackage Include="$(OutputPath)KCCINC.Exaone.Activities.dll" />
 		</ItemGroup>
 	</Target>
 
@@ -48,10 +48,14 @@
 	</Target>
 
 	<ItemGroup>
-		<ProjectReference Include="..\UiPath.Activities.Exaone\UiPath.Activities.Exaone.csproj" />
+		<ProjectReference Include="..\KCCINC.Exaone.Activities\KCCINC.Exaone.Activities.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Remove="..\KCCINC.Exaone.Activities\bin\Release\net6.0\UiPath.Platform.dll" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="..\UiPath.Activities.Exaone\bin\$(Configuration)\net6.0\UiPath.Platform.dll">
+		<Content Include="..\KCCINC.Exaone.Activities\bin\$(Configuration)\net6.0\UiPath.Platform.dll">
 			<Pack>true</Pack>
 			<PackagePath>lib/net6.0/</PackagePath>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

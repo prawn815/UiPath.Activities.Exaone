@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace UiPath.Activities.Exaone.Helpers
+namespace KCCINC.Exaone.Activities.Helpers
 {
     internal static class PromptFormatter
     {

@@ -3,11 +3,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UiPath.Activities.Exaone.Models; // ExaoneResponse 위치
-using UiPath.Activities.Exaone.Helpers;
 using UiPath.Platform.ResourceHandling;
+using KCCINC.Exaone.Activities.Helpers;
+using KCCINC.Exaone.Activities.Models;
 
-namespace UiPath.Activities.Exaone
+namespace KCCINC.Exaone.Activities
 {
     public class ContentGeneration : CodeActivity<string> // This base class exposes an OutArgument named Result
     {
@@ -267,13 +267,13 @@ namespace UiPath.Activities.Exaone
 
                 var requestData = new
                 {
-                    model = model,
+                    model,
                     messages = new[]
                     {
                          new { role = "system", content = systemPrompt },  // 시스템 스타일
                           new { role = "user", content = combinedPrompt }   // 유저 입력 + 컨텍스트
                      },
-                    temperature = temperature
+                    temperature
                 };
 
                 string jsonData = JsonConvert.SerializeObject(requestData);
@@ -300,7 +300,7 @@ namespace UiPath.Activities.Exaone
             {
                 string requestUrl = $"http://exaone.myrobots.co.kr/db/query?collection={Uri.EscapeDataString(collection)}";
 
-                var requestData = new { query = searchquery, top_k = top_k, score = score };
+                var requestData = new { query = searchquery, top_k, score };
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -424,7 +424,7 @@ namespace UiPath.Activities.Exaone
             {
                 string requestUrl = $"http://exaone.myrobots.co.kr/db/webpage?collection={Uri.EscapeDataString(collection)}";
 
-                var requestData = new { url = url };
+                var requestData = new { url };
                 string jsonData = JsonConvert.SerializeObject(requestData);
                 HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

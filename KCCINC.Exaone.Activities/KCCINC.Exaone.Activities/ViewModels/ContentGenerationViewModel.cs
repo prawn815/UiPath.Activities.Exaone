@@ -1,9 +1,10 @@
-﻿using System.Activities;
+﻿using KCCINC.Exaone.Activities;
+using KCCINC.Exaone.Activities.Helpers;
+using System.Activities;
 using System.Activities.DesignViewModels;
 using System.Collections;
-using UiPath.Activities.Exaone.Extensions;
 
-namespace UiPath.Activities.Exaone.ViewModels
+namespace KCCINC.Exaone.Activities.ViewModels
 {
     public class ContentGenerationViewModel : DesignPropertiesViewModel
     {
