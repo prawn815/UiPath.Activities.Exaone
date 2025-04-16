@@ -273,23 +273,55 @@ namespace KCCINC.Exaone.Activities
                          new { role = "system", content = systemPrompt },  // 시스템 스타일
                           new { role = "user", content = combinedPrompt }   // 유저 입력 + 컨텍스트
                      },
-                    temperature
+                    temperature,
+                    stream = true   // 스트리밍 추가
                 };
 
-                string jsonData = JsonConvert.SerializeObject(requestData);
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage(HttpMethod.Post, endpoint)
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json")
+                };
 
-                //PrintCurlCommand(endpoint, apiKey, jsonData); //*
-                // API 호출
-                HttpResponseMessage response = await client.PostAsync(endpoint, content);
-                string result = await response.Content.ReadAsStringAsync();
+                // 🔹 응답 스트리밍 수신 및 처리
+                using (var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        throw new Exception($"CallExaoneAPI (streaming) failed: {response.StatusCode} - {error}");
+                    }
 
-                if (!response.IsSuccessStatusCode)
-                    throw new Exception($"CallExaoneAPI failed: {response.StatusCode} - {result}");
+                    var builder = new StringBuilder();
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    using (var reader = new StreamReader(stream))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = await reader.ReadLineAsync();
+                            if (!string.IsNullOrWhiteSpace(line) && line.StartsWith("data: "))
+                            {
+                                var jsonPart = line.Substring("data: ".Length);
+                                if (jsonPart.Trim() == "[DONE]") break;
 
-                return JsonConvert.DeserializeObject<ExaoneResponse>(result);
+                                try
+                                {
+                                    var chunk = JsonConvert.DeserializeObject<ExaoneStreamChunk>(jsonPart);
+                                    var token = chunk?.choices?[0]?.delta?.content;
+                                    if (!string.IsNullOrWhiteSpace(token))
+                                        builder.Append(token);
+                                }
+                                catch (JsonException ex)
+                                {
+                                    Console.WriteLine($"[파싱 오류] 잘못된 chunk: {jsonPart} | {ex.Message}");
+                                    continue;
+                                }
+                            }
+                        }
+                    }
 
-
+                    // 🔹 누적된 content를 기존 응답 포맷으로 포장
+                    return ExaoneResponseBuilder.FromStreamedContent(builder.ToString(), model);
+                }
             }
         }
 
