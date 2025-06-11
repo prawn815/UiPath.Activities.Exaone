@@ -11,7 +11,7 @@
 		<VersionBuild>$([System.DateTime]::UtcNow.DayOfYear.ToString("F0"))</VersionBuild>
 		<VersionRevision>$([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes.ToString("F0"))</VersionRevision>
 		<PackageId>KCCINC.Exaone.Activities</PackageId>
-		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.3</VersionPrefix>
+		<VersionPrefix Condition="'$(Configuration)' == 'Release'">1.0.4</VersionPrefix>
 		<VersionPrefix Condition="'$(Configuration)' == 'Debug'">1.0.$(VersionBuild)-dev.$(VersionRevision)</VersionPrefix>
 		<Authors>KCC정보통신 DX서비스팀</Authors>
 		<Description>Exaone 콘텐츠 생성용 액티비티입니다.</Description>
@@ -21,6 +21,8 @@
 		<PackageOutputPath>..\Output\Activities\Packages\</PackageOutputPath>
 		<TargetsForTfmSpecificBuildOutput>AddDlls</TargetsForTfmSpecificBuildOutput>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<Target Name="AddDlls">
